@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Header } from './components/layout/Header';
 import { NavigationTabs } from './components/layout/NavigationTabs';
 import { BlueprintGenerator } from './components/generator/BlueprintGenerator';
+import { ModuleGraphVisualizer } from './components/architecture/ModuleGraphVisualizer';
 import { FilamentVisualizer } from './components/filament/FilamentVisualizer';
+import { DependencyAuditor } from './components/audit/DependencyAuditor';
 import { RulesExplorer } from './components/rules/RulesExplorer';
 import { DependencyInspector } from './components/libraries/DependencyInspector';
 import { VectorStudio } from './components/vector/VectorStudio';
@@ -77,7 +79,9 @@ export default function App() {
         {activeTab === 'generator' && (
           <BlueprintGenerator options={options} onOptionsChange={setOptions} />
         )}
+        {activeTab === 'module-graph' && <ModuleGraphVisualizer />}
         {activeTab === 'filament' && <FilamentVisualizer />}
+        {activeTab === 'auditor' && <DependencyAuditor />}
         {activeTab === 'rules' && <RulesExplorer />}
         {activeTab === 'dependencies' && <DependencyInspector />}
         {activeTab === 'vector-studio' && <VectorStudio />}

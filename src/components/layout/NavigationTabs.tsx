@@ -2,6 +2,8 @@ import React from 'react';
 import {
   Layers,
   Box,
+  GitBranch,
+  ShieldCheck,
   BookOpen,
   ShieldAlert,
   Sparkles,
@@ -20,12 +22,14 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
 }) => {
   const tabs = [
     { id: 'generator', label: 'Blueprint Generator', icon: Layers },
-    { id: 'filament', label: 'Filament & 3D Engine', icon: Box },
+    { id: 'module-graph', label: 'KMP Architecture Graph', icon: GitBranch },
+    { id: 'filament', label: 'Filament 3D Engine', icon: Box },
+    { id: 'auditor', label: 'Dependency Auditor', icon: ShieldCheck },
     { id: 'rules', label: 'Engineering Rules', icon: BookOpen },
-    { id: 'dependencies', label: 'Dependency Matrix', icon: ShieldAlert },
+    { id: 'dependencies', label: 'Library Matrix', icon: ShieldAlert },
     { id: 'vector-studio', label: 'Vector & SVG Studio', icon: Sparkles },
     { id: 'schemas', label: 'Schema Inspector', icon: FileCode2 },
-    { id: 'standards', label: 'Standards Exporter (.md)', icon: BookMarked },
+    { id: 'standards', label: 'Standards Exporter', icon: BookMarked },
   ];
 
   return (

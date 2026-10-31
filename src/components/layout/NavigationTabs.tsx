@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Layers,
   Box,
+  Radio,
   GitBranch,
   ShieldCheck,
   BookOpen,
@@ -22,6 +23,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
 }) => {
   const tabs = [
     { id: 'generator', label: 'Blueprint Generator', icon: Layers },
+    { id: 'sensors', label: 'Hardware & Sensor APIs', icon: Radio },
     { id: 'module-graph', label: 'KMP Architecture Graph', icon: GitBranch },
     { id: 'filament', label: 'Filament 3D Engine', icon: Box },
     { id: 'auditor', label: 'Dependency Auditor', icon: ShieldCheck },

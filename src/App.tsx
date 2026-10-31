@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Header } from './components/layout/Header';
 import { NavigationTabs } from './components/layout/NavigationTabs';
 import { BlueprintGenerator } from './components/generator/BlueprintGenerator';
+import { HardwareSensorStudio } from './components/sensors/HardwareSensorStudio';
 import { ModuleGraphVisualizer } from './components/architecture/ModuleGraphVisualizer';
 import { FilamentVisualizer } from './components/filament/FilamentVisualizer';
 import { DependencyAuditor } from './components/audit/DependencyAuditor';
@@ -79,6 +80,7 @@ export default function App() {
         {activeTab === 'generator' && (
           <BlueprintGenerator options={options} onOptionsChange={setOptions} />
         )}
+        {activeTab === 'sensors' && <HardwareSensorStudio />}
         {activeTab === 'module-graph' && <ModuleGraphVisualizer />}
         {activeTab === 'filament' && <FilamentVisualizer />}
         {activeTab === 'auditor' && <DependencyAuditor />}
@@ -98,9 +100,9 @@ export default function App() {
               Multiplatform Standards Engine
             </span>
             <span aria-hidden="true">·</span>
-            <span>Zero-Emoji Architecture</span>
+            <span>Hardware, Battery, BLE Scales & Sensors</span>
             <span aria-hidden="true">·</span>
-            <span>Filament 3D & JNI Safety</span>
+            <span>Zero-Emoji Architecture</span>
           </div>
 
           <div className="flex items-center gap-4 text-slate-400">

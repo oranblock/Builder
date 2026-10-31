@@ -1,0 +1,6 @@
+{
+  "name": "KMP & Multiplatform Engineering Standards Engine",
+  "description": "Interactive repository blueprint generator, architectural rules explorer, and code templates for Kotlin Multiplatform, Android, iOS, and Web with SVG animations and schema exports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Header } from './components/layout/Header';
 import { NavigationTabs } from './components/layout/NavigationTabs';
 import { BlueprintGenerator } from './components/generator/BlueprintGenerator';
+import { FilamentVisualizer } from './components/filament/FilamentVisualizer';
 import { RulesExplorer } from './components/rules/RulesExplorer';
 import { DependencyInspector } from './components/libraries/DependencyInspector';
 import { VectorStudio } from './components/vector/VectorStudio';
 import { SchemaViewer } from './components/schema/SchemaViewer';
+import { StandardsExporter } from './components/standards/StandardsExporter';
 import { GeneratorOptions } from './types';
 import { templateFiles } from './data/templatesData';
 import { downloadProjectZip } from './lib/zipExport';
-import { Shield, Cpu, Code2, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Cpu, CheckCircle2 } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('generator');
@@ -75,10 +77,12 @@ export default function App() {
         {activeTab === 'generator' && (
           <BlueprintGenerator options={options} onOptionsChange={setOptions} />
         )}
+        {activeTab === 'filament' && <FilamentVisualizer />}
         {activeTab === 'rules' && <RulesExplorer />}
         {activeTab === 'dependencies' && <DependencyInspector />}
         {activeTab === 'vector-studio' && <VectorStudio />}
         {activeTab === 'schemas' && <SchemaViewer options={options} />}
+        {activeTab === 'standards' && <StandardsExporter options={options} />}
       </main>
 
       {/* Footer */}
@@ -92,7 +96,7 @@ export default function App() {
             <span aria-hidden="true">·</span>
             <span>Zero-Emoji Architecture</span>
             <span aria-hidden="true">·</span>
-            <span>Filament PBR & Compose Lifecycle</span>
+            <span>Filament 3D & JNI Safety</span>
           </div>
 
           <div className="flex items-center gap-4 text-slate-400">

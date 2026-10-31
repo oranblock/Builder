@@ -1,5 +1,13 @@
 import React from 'react';
-import { Layers, BookOpen, ShieldAlert, Sparkles, FileCode2 } from 'lucide-react';
+import {
+  Layers,
+  Box,
+  BookOpen,
+  ShieldAlert,
+  Sparkles,
+  FileCode2,
+  BookMarked,
+} from 'lucide-react';
 
 interface NavigationTabsProps {
   activeTab: string;
@@ -12,10 +20,12 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
 }) => {
   const tabs = [
     { id: 'generator', label: 'Blueprint Generator', icon: Layers },
-    { id: 'rules', label: 'Engineering Rules & Skills', icon: BookOpen },
-    { id: 'dependencies', label: 'Dependency Matrix (Use vs Avoid)', icon: ShieldAlert },
-    { id: 'vector-studio', label: 'Vector & SVG Studio (Zero Emoji)', icon: Sparkles },
-    { id: 'schemas', label: 'Multi-Schema Inspector', icon: FileCode2 },
+    { id: 'filament', label: 'Filament & 3D Engine', icon: Box },
+    { id: 'rules', label: 'Engineering Rules', icon: BookOpen },
+    { id: 'dependencies', label: 'Dependency Matrix', icon: ShieldAlert },
+    { id: 'vector-studio', label: 'Vector & SVG Studio', icon: Sparkles },
+    { id: 'schemas', label: 'Schema Inspector', icon: FileCode2 },
+    { id: 'standards', label: 'Standards Exporter (.md)', icon: BookMarked },
   ];
 
   return (

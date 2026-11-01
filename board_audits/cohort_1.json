@@ -3,18 +3,18 @@
     "cohort_number": 1,
     "total_projects": 16,
     "is_complete": false,
-    "avg_score": 81.6,
+    "avg_score": 80.3,
     "student_grade": "B (Passable with Active Remediation)",
-    "certified_count": 7,
-    "remediation_count": 7,
+    "certified_count": 6,
+    "remediation_count": 8,
     "defective_count": 2,
     "zero_emoji_compliance_pct": 93.8,
     "clean_arch_compliance_pct": 100.0,
     "native_shots_compliance_pct": 100.0,
     "valuation": {
-      "mvp_sar": 24500,
-      "shopify_sar": 59500,
-      "nextjs_sar": 105000
+      "mvp_sar": 21000,
+      "shopify_sar": 51000,
+      "nextjs_sar": 90000
     },
     "results": [
       {
@@ -944,7 +944,8 @@
               "title": "واجهة iOS للدفع عبر Apple Pay والفاتورة الضريبية",
               "path": "shots/1271101_ios_03.png"
             }
-          ]
+          ],
+          "_source_path": "/app/applet/user_factory_archive/live-previews/specs/1271101.json"
         }
       },
       {
@@ -1078,7 +1079,8 @@
               "title": "واجهة iOS للدفع عبر Apple Pay والفاتورة الضريبية",
               "path": "shots/1271102_ios_03.png"
             }
-          ]
+          ],
+          "_source_path": "/app/applet/user_factory_archive/live-previews/specs/1271102.json"
         }
       },
       {
@@ -1212,36 +1214,37 @@
               "title": "واجهة iOS للدفع عبر Apple Pay والفاتورة الضريبية",
               "path": "shots/1271103_ios_03.png"
             }
-          ]
+          ],
+          "_source_path": "/app/applet/user_factory_archive/live-previews/specs/1271103.json"
         }
       },
       {
         "project_id": "1271104",
-        "app_name": "مشروع تطبيق لياقة وتدريب شخصي ذكي مع",
-        "score": 95,
-        "verdict": "CERTIFIED (100% 🟢)",
-        "badge": "🟢",
-        "contrast_ratio": 3.85,
-        "primary_color": "#2563eb",
+        "app_name": "تطبيق نبض — العيادة الرقمية والمؤشرات الحيوية",
+        "score": 75,
+        "verdict": "REMEDIATION (🟡)",
+        "badge": "🟡",
+        "contrast_ratio": 4.86,
+        "primary_color": "#0284c7",
         "emoji_violations_count": 0,
         "penalties": [
-          "Suboptimal Contrast: 3.85:1 ratio (< 4.5:1 AA standard) (-5 pts)"
+          "Superficial Domain Specification: Brief description lacks architectural depth (-10 pts)",
+          "Incomplete Screen Coverage: Fewer than 3 operational screens defined (-10 pts)",
+          "Legacy Architecture Warning: Modern MAD Jetpack Compose not explicitly referenced (-5 pts)"
         ],
         "commendations": [
           "Pure Vector Compliance: 100% Zero-Emoji Invariant strictly maintained",
-          "Exemplary Domain Depth: High-fidelity requirements matrix & architectural specification",
-          "Multi-Screen Architecture: Complete 3-stage flow (Home, Details, Tracking)",
-          "Enterprise Stack: Modern Android Jetpack Compose + Clean Architecture MVVM"
+          "WCAG 2.1 AA Contrast Pass: 4.86:1 ratio (#0284c7)"
         ],
         "raw_spec": {
           "project_id": "1271104",
-          "app_name": "مشروع تطبيق لياقة وتدريب شخصي ذكي مع",
-          "tagline": "نظام رقمي سحابي متكامل فائق الأداء والأمان",
-          "preset": "agritech",
+          "app_name": "تطبيق نبض — العيادة الرقمية والمؤشرات الحيوية",
+          "tagline": "استشارات طبية مرئية فورية، ربط أجهزة قياس الضغط والسكر، وتتبع حيوي لحظي",
+          "preset": "standard",
           "layout_type": "telehealth",
           "theme": {
-            "primary_color": "#2563eb",
-            "accent_color": "#1e40af"
+            "primary_color": "#0284c7",
+            "accent_color": "#ef4444"
           },
           "banner": {
             "title": "طبيب الأسرة متاح للمحادثة المرئية الآن",
@@ -1289,16 +1292,14 @@
           "commit_hash": "a99182d",
           "proof_screenshots": [
             {
-              "title": "الشاشة الرئيسية واستعراض الخدمات والمحتوى",
-              "path": "shots/1271104_01.png"
+              "title": "مزامنة حساس النبض والضغط BLE",
+              "path": "shots/1271104_01.png",
+              "fallback": "Blood Pressure GATT 0x1810 Connected"
             },
             {
-              "title": "شاشة تفاصيل الطلب وخيارات التخصيص",
-              "path": "shots/1271104_02.png"
-            },
-            {
-              "title": "شاشة التتبع المباشر وحالة المعالجة",
-              "path": "shots/1271104_03.png"
+              "title": "غرفة مكالمة الفيديو WebRTC",
+              "path": "shots/1271104_02.png",
+              "fallback": "Audio/Video Stream Encrypted SRTP"
             }
           ],
           "detailed_desc": "تطبيق رعاية صحية رقمية واستشارات طبية عن بعد يدعم الاتصال المباشر بأجهزة قياس ضغط الدم ومستشعرات النبض وسكر الدم عبر تقنية البلوتوث منخفض الطاقة، وتوثيق ملف المريض برقم الهوية والوصفات الرقمية المعتمدة.",
@@ -1311,99 +1312,7 @@
             "heart_rate_bpm": 72,
             "blood_oxygen_pct": 99,
             "ble_bp_monitor": "Omron Connect BLE (GATT 0x1810)"
-          },
-          "archetype": "agritech",
-          "description": "مشروع لتنفيذ متطلبات: تطبيق لياقة وتدريب شخصي ذكي مع حساسات النبض. تطبيق تمارين تفاعلية مع جداول تغذية وربط حساسات النبض بالبلوتوث وتوليد خطط تدريب مخصصة بدون أي تعقيد.. تم بناؤه بهندسة Clean Architecture ونظام متجهات SVG خالي تماماً من الإيموجي.",
-          "business_solutions": {
-            "sales_impact": "زيادة المبيعات بنسبة 35% عبر تدفق طلب سلس في 3 خطوات",
-            "automation_value": "توفير 40 ساعة شهرياً عبر أتمتة المعالجة السحابية",
-            "retention_value": "استجابة فائقة السرعة بـ 60 إطار في الثانية تعزز ثقة العميل"
-          },
-          "sensors": [
-            {
-              "type": "soil_moisture",
-              "label": "LoRaWAN Capacitive Soil Sensor",
-              "status": "active"
-            },
-            {
-              "type": "weigh_scale",
-              "label": "Industrial Harvest Scale",
-              "status": "ready"
-            }
-          ],
-          "ios_proof_screenshots": [
-            {
-              "title": "واجهة iOS الرئيسية واستعراض الخدمات",
-              "path": "shots/1271104_ios_01.png"
-            },
-            {
-              "title": "واجهة iOS لتفاصيل الطلب والمحددات",
-              "path": "shots/1271104_ios_02.png"
-            },
-            {
-              "title": "واجهة iOS للدفع عبر Apple Pay والفاتورة الضريبية",
-              "path": "shots/1271104_ios_03.png"
-            }
-          ],
-          "tech_stack": [
-            "Kotlin 2.1 Multiplatform",
-            "Jetpack Compose MAD",
-            "StateFlow & Coroutines",
-            "Clean Architecture MVVM",
-            "Pure Vector Drawables (Zero Emojis)",
-            "Hardware Sensor Drivers"
-          ],
-          "client_requirements_matrix": [
-            {
-              "id": "REQ-01",
-              "title_ar": "التوافق مع المعايير السعودية",
-              "category": "نظامية",
-              "detail_ar": "تطبيق ضريبة القيمة المضافة 15% والفوترة الإلكترونية",
-              "status": "مكتمل"
-            },
-            {
-              "id": "REQ-02",
-              "title_ar": "حماية بيانات العملاء",
-              "category": "أمان",
-              "detail_ar": "تشفير كامل لقواعد البيانات المحلية AES-256",
-              "status": "مكتمل"
-            },
-            {
-              "id": "REQ-03",
-              "title_ar": "استجابة الواجهات 60 FPS",
-              "category": "أداء",
-              "detail_ar": "بناء أصيل بـ Jetpack Compose دون أي WebViews",
-              "status": "مكتمل"
-            }
-          ],
-          "cost_and_infra_matrix": [
-            {
-              "item_ar": "تطوير التطبيق الأصيل (Android + iOS)",
-              "cost_ar": "3,500 ر.س",
-              "responsibility_ar": "فريق التطوير",
-              "tech_details_ar": "تسليم الكود المصدري كاملاً"
-            },
-            {
-              "item_ar": "استضافة الخادم السحابي وقاعدة البيانات",
-              "cost_ar": "مجاناً للمرحلة الأولى",
-              "responsibility_ar": "العميل",
-              "tech_details_ar": "سيرفر VPS أو Cloud Run"
-            }
-          ],
-          "proof_screenshots_ios": [
-            {
-              "title": "واجهة iOS الرئيسية واستعراض الخدمات",
-              "path": "shots/1271104_ios_01.png"
-            },
-            {
-              "title": "واجهة iOS لتفاصيل الطلب والمحددات",
-              "path": "shots/1271104_ios_02.png"
-            },
-            {
-              "title": "واجهة iOS للدفع عبر Apple Pay والفاتورة الضريبية",
-              "path": "shots/1271104_ios_03.png"
-            }
-          ]
+          }
         }
       },
       {
@@ -1633,7 +1542,8 @@
               "title": "واجهة iOS للدفع عبر Apple Pay والفاتورة الضريبية",
               "path": "shots/999123_ios_03.png"
             }
-          ]
+          ],
+          "_source_path": "/app/applet/user_factory_archive/live-previews/specs/999123.json"
         }
       }
     ]
@@ -1648,5 +1558,5 @@
       "Sensei Invariant Breach: Headmaster permitted 1 emoji violations (-15 pts)"
     ]
   },
-  "timestamp": "2026-11-01T22:22:06.090416"
+  "timestamp": "2026-11-01T22:26:44.471324"
 }

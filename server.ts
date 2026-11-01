@@ -300,10 +300,46 @@ async function startServer() {
     } else if (lowerBrief.includes('زراعة') || lowerBrief.includes('ري') || lowerBrief.includes('مزرعة') || lowerBrief.includes('تربة') || lowerBrief.includes('نخيل') || lowerBrief.includes('lora')) {
       layoutType = 'agritech';
       chosenPreset = 'standard';
+    } else if (lowerBrief.includes('عقار') || lowerBrief.includes('فيلا') || lowerBrief.includes('شقة') || lowerBrief.includes('أملاك') || lowerBrief.includes('صك') || lowerBrief.includes('برج') || lowerBrief.includes('real_estate')) {
+      layoutType = 'real_estate';
+      chosenPreset = 'real_estate';
+    } else if (lowerBrief.includes('سيارة') || lowerBrief.includes('تأجير') || lowerBrief.includes('أسطول') || lowerBrief.includes('obd') || lowerBrief.includes('car_rental')) {
+      layoutType = 'car_rental';
+      chosenPreset = 'car_rental';
+    } else if (lowerBrief.includes('صالون') || lowerBrief.includes('تجميل') || lowerBrief.includes('سبا') || lowerBrief.includes('عناية') || lowerBrief.includes('شعر') || lowerBrief.includes('بشرة') || lowerBrief.includes('beauty')) {
+      layoutType = 'beauty_salon';
+      chosenPreset = 'beauty_salon';
+    } else if (lowerBrief.includes('مزاد') || lowerBrief.includes('مزايدة') || lowerBrief.includes('خيل') || lowerBrief.includes('نوادر') || lowerBrief.includes('auction')) {
+      layoutType = 'auction_live';
+      chosenPreset = 'auction_live';
+    } else if (lowerBrief.includes('معسكر') || lowerBrief.includes('دورة') || lowerBrief.includes('تعليم') || lowerBrief.includes('تدريب') || lowerBrief.includes('طالب') || lowerBrief.includes('شهادة') || lowerBrief.includes('edtech')) {
+      layoutType = 'smart_education';
+      chosenPreset = 'smart_education';
+    } else if (lowerBrief.includes('مستودع') || lowerBrief.includes('مخزون') || lowerBrief.includes('جرد') || lowerBrief.includes('طبلية') || lowerBrief.includes('باركود') || lowerBrief.includes('wms') || lowerBrief.includes('warehouse')) {
+      layoutType = 'logistics_warehouse';
+      chosenPreset = 'logistics_warehouse';
     }
 
-    if (preset && ['services', 'navigation', 'pos_cashier', 'fitness', 'food', 'coworking', 'telehealth', 'agritech'].includes(preset)) {
+    const VALID_PRESETS = [
+      'services',
+      'navigation',
+      'pos_cashier',
+      'fitness',
+      'food',
+      'coworking',
+      'telehealth',
+      'agritech',
+      'real_estate',
+      'car_rental',
+      'beauty_salon',
+      'auction_live',
+      'smart_education',
+      'logistics_warehouse',
+      'custom'
+    ];
+    if (preset && VALID_PRESETS.includes(preset)) {
       layoutType = preset;
+      chosenPreset = preset;
     }
 
     // Compute mathematical design formula for uniqueness
@@ -439,6 +475,109 @@ async function startServer() {
           etaMinutes: 14,
           otpCode: '4921',
           distanceKm: 2.8
+        }
+      },
+      real_estate: {
+        app_name: `منصة إيوان العقارية #${projId.slice(-4)}`,
+        tagline: 'جولات افتراضية ثلاثية الأبعاد وصكوك إلكترونية موثقة',
+        categories: ['الفلل الفاخرة', 'البنتهاوس', 'الأراضي التجارية', 'أبراج مكتبية'],
+        items: [
+          { title: 'فيلا حي النخيل الفاخرة', desc: 'مساحة 850 م² مع مسبح ونظام ذكي', price: '7,200,000 ر.س', icon: 'home', badge: 'صك موثق' },
+          { title: 'بنتهاوس برج المجدول', desc: 'إطلالة بانورامية مع تراس خاص', price: '4,500,000 ر.س', icon: 'building', badge: 'إفراغ فوري' },
+          { title: 'أرض تجارية طريق الملك سلمان', desc: 'واجهة 50 م تصريح أبراج', price: '19,000,000 ر.س', icon: 'map_pin', badge: 'استثمار' }
+        ],
+        domain_data: {
+          verifiedBroker: 'أ. سلطان الخالدي (ترخيص فال)',
+          titleDeedNo: '310109284711',
+          lidarActive: true
+        }
+      },
+      car_rental: {
+        app_name: `أسطول نجد للسيارات الذكية #${projId.slice(-4)}`,
+        tagline: 'فتح السيارة بالهاتف وتفويض تم فوري برقم الهوية',
+        categories: ['سيارات فارهة', 'عائلية SUV', 'اقتصادية', 'كهربائية EV'],
+        items: [
+          { title: 'رنج روفر فيلار 2026', desc: 'تأمين شامل بدون تأمين إضافي', price: '680 ر.س/يوم', icon: 'car', badge: 'تأمين شامل' },
+          { title: 'لوسيد آير بيور الكهربائية', desc: 'مدى 650 كم مع شحن مجاني', price: '850 ر.س/يوم', icon: 'zap', badge: 'شحن مجاني' },
+          { title: 'تويوتا لاندكروزر VXR', desc: 'مجهزة للرحلات البرية الطويلة', price: '550 ر.س/يوم', icon: 'shield', badge: 'كيلو مفتوح' }
+        ],
+        domain_data: {
+          vehicleModel: 'Range Rover Velar 2026',
+          fuelLevel: 88,
+          doorsLocked: true
+        }
+      },
+      beauty_salon: {
+        app_name: `صالون لافندر للعناية #${projId.slice(-4)}`,
+        tagline: 'حجز المواعيد بالدقيقة وتعقيم الأدوات بتقنية UV-C',
+        categories: ['العناية بالشعر', 'علاجات البشرة', 'المساج', 'الأظافر'],
+        items: [
+          { title: 'جلسة هيدرافاشيال متقدمة', desc: 'تقشير وترطيب بحمض الهيالورونيك', price: '380 ر.س', icon: 'sparkles', badge: 'الأكثر طلباً' },
+          { title: 'علاج كافيار الكولاجين', desc: 'ترميم وتغذية عميقة لألياف الشعر', price: '450 ر.س', icon: 'scissors', badge: 'نتائج فورية' },
+          { title: 'مساج الأحجار البركانية الدافئة', desc: 'جلسة 60 دقيقة للاسترخاء التام', price: '290 ر.س', icon: 'heart', badge: 'راحة تامة' }
+        ],
+        domain_data: {
+          specialistName: 'أ. نورة التميمي',
+          sterilizationStatus: 'معقم UV-C 100%',
+          loyaltyPoints: 340
+        }
+      },
+      auction_live: {
+        app_name: `مزادات الصافنات الحية #${projId.slice(-4)}`,
+        tagline: 'مزايدة حية بالصوت والصورة مع مضرب لاسلكي BLE ومطرقة فورية',
+        categories: ['الخيل والنوادر', 'العقارات', 'اللوحات المميزة', 'الساعات'],
+        items: [
+          { title: 'المهر العربي الأصيل (سيف الصافنات)', desc: 'خط صقلاوي جدراني ببطولات دولية', price: '285,000 ر.س', icon: 'award', badge: 'المزاد الحالي' },
+          { title: 'لوحة خصوصي ملكية (ط و ق 1)', desc: 'موثقة ومسجلة عبر منصة أبشر', price: '190,000 ر.س', icon: 'tag', badge: 'مفتوح' },
+          { title: 'ساعة رولكس دايتونا بلاتينيوم', desc: 'ميناء أزرق جليدي مع أوراق الضمان', price: '340,000 ر.س', icon: 'clock', badge: 'فحص أصلي' }
+        ],
+        domain_data: {
+          leadingBidSar: 285000,
+          escrowGuaranteeSar: 50000,
+          bidTimerSeconds: 38
+        }
+      },
+      smart_education: {
+        app_name: `أكاديمية طويق التعليمية #${projId.slice(-4)}`,
+        tagline: 'قاعات تدريب حية وقلم ذكي لمزامنة الشروحات بدقة 4096',
+        categories: ['تطوير البرمجيات', 'الذكاء الاصطناعي', 'الأمن السيبراني', 'إدارة المشاريع'],
+        items: [
+          { title: 'معسكر Kotlin Multiplatform وCompose', desc: '120 ساعة تدريبية مع بناء 6 مشاريع', price: '1,850 ر.س', icon: 'code', badge: 'معتمد' },
+          { title: 'دبلوم هندسة نماذج LLM Agents', desc: 'بناء وكلاء الذكاء الاصطناعي وواجهات API', price: '2,400 ر.س', icon: 'cpu', badge: 'مقاعد محدودة' },
+          { title: 'شهادة قيادة الأمن السيبراني', desc: 'إعداد لاختبارات CISSP الدولية', price: '1,500 ر.س', icon: 'shield', badge: 'مسائي' }
+        ],
+        domain_data: {
+          instructor: 'م. خالد السديري',
+          activeStudents: 84,
+          certificateHash: '0x78ab310cd9912048'
+        }
+      },
+      logistics_warehouse: {
+        app_name: `مستودعات مسار الذكية #${projId.slice(-4)}`,
+        tagline: 'جرد سريع بماسحات 2D ليزرية وميزان طبالي بلوتوث',
+        categories: ['استلام الشحنات', 'الصرف والتجهيز', 'الجرد الدوري', 'طباعة بوالص'],
+        items: [
+          { title: 'طبلية قطع غيار سيارات B-12', desc: 'الباركود PAL-901827 وزن 380 كجم', price: 'تم الفحص', icon: 'package', badge: 'مطابق 100%' },
+          { title: 'حاوية أجهزة لوحية A-04', desc: 'الباركود PAL-881290 وزن 210 كجم', price: 'بانتظار الصرف', icon: 'cpu', badge: 'عاجل' },
+          { title: 'طبلية مستلزمات طبية مبردة C-08', desc: 'الباركود PAL-772109 حرارة تحت 18°C', price: 'مخزن مبرد', icon: 'thermometer', badge: 'حساس' }
+        ],
+        domain_data: {
+          currentBarcode: 'PAL-901827-RYD',
+          palletWeightKg: 380.5,
+          shelfLocation: 'Zone B / Rack 12'
+        }
+      },
+      custom: {
+        app_name: `منظومة مخصصة #${projId.slice(-4)}`,
+        tagline: 'تطبيق تجاري مخصص غير متكرر مع ربط أجهزة الاستشعار',
+        categories: ['الخدمات الرئيسية', 'المطابقة', 'التقارير', 'الإعدادات'],
+        items: [
+          { title: 'الحزمة الأساسية المعتمدة', desc: 'تشغيل وتكامل مع العتاد الفيزيائي', price: '3,500 ر.س', icon: 'check', badge: 'معتمد' },
+          { title: 'الدعم الفني المباشر والسيرفر', desc: 'استضافة سحابية مع ضمان 99.9%', price: '1,200 ر.س', icon: 'shield', badge: 'SLA' }
+        ],
+        domain_data: {
+          noveltyScore: '100% Unique',
+          customEngine: true
         }
       }
     };

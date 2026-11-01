@@ -6,13 +6,20 @@ export type LayoutType =
   | 'food'
   | 'coworking'
   | 'telehealth'
-  | 'agritech';
+  | 'agritech'
+  | 'real_estate'
+  | 'car_rental'
+  | 'beauty_salon'
+  | 'auction_live'
+  | 'smart_education'
+  | 'logistics_warehouse'
+  | 'custom';
 
 export interface UniversalAppSpec {
   project_id: string;
   app_name: string;
   tagline: string;
-  preset: 'restaurant' | 'ecommerce' | 'standard' | 'services' | 'food';
+  preset: string;
   layout_type: LayoutType;
   theme: {
     primary_color: string;
@@ -583,5 +590,415 @@ export const realFactoryProjects: UniversalAppSpec[] = [
       irrigation_mode: "تحكم ذكي بالطقس (Smart ET0)",
       lorawan_gateway_status: "متصل (16 عقدة نشطة)"
     }
+  },
+
+  // 9. PropTech & Luxury Real Estate
+  {
+    project_id: "1272001",
+    app_name: "منصة إيوان — العقارات الفاخرة وإدارة الأملاك",
+    tagline: "جولات افتراضية ثلاثية الأبعاد، صكوك إلكترونية موثقة، وحجز معاينات فورية",
+    preset: "real_estate",
+    layout_type: "real_estate",
+    theme: {
+      primary_color: "#1e3a8a",
+      accent_color: "#d97706"
+    },
+    banner: {
+      title: "صكوك إلكترونية معتمدة بنسبة 100%",
+      subtitle: "استكشف أكثر من 450 عقاراً فاخراً في الرياض وجدة مع جولات LiDAR ثلاثية الأبعاد"
+    },
+    categories: ["الفلل الفاخرة", "شقق البنتهاوس", "الأراضي التجارية", "المقرات المكتبية"],
+    items: [
+      {
+        title: "فيلا حي حطين المعمارية الفاخرة",
+        desc: "مساحة 750 م²، مسبح ذكي، نظام أتمتة كامل، 6 أجنحة نوم ماستر",
+        price: "6,850,000 ر.س",
+        icon: "home",
+        badge: "صك إلكتروني موثق"
+      },
+      {
+        title: "بنتهاوس برج المجدول — إطلالة بانورامية",
+        desc: "الدور 42، مساحة 420 م²، مصعد خاص، تراس خارجي واسع مع مسبح معلق",
+        price: "4,200,000 ر.س",
+        icon: "building",
+        badge: "جاهز للإفراغ"
+      },
+      {
+        title: "أرض تجارية استثمارية طريق الملك فهد",
+        desc: "واجهة 40 متر، ترخيص أبراج مكتبية متعددة الاستخدام، مساحة 1,200 م²",
+        price: "18,500,000 ر.س",
+        icon: "map-pin",
+        badge: "استثمار مميز"
+      }
+    ],
+    nav_tabs: [
+      { id: "listings", label: "العقارات", icon: "home" },
+      { id: "tour_3d", label: "جولة 3D", icon: "box" },
+      { id: "broker", label: "الوسيط المعتمد", icon: "user" }
+    ],
+    commit_hash: "b812001",
+    proof_screenshots: [
+      {
+        title: "جولة LiDAR ثلاثية الأبعاد",
+        path: "shots/1272001_01.png",
+        fallback: "3D Spatial Point Cloud Mesh Ready"
+      },
+      {
+        title: "التحقق من الصك في منصة البورصة العقارية",
+        path: "shots/1272001_02.png",
+        fallback: "Saudi Real Estate Registry Verified"
+      }
+    ],
+    detailed_desc: "منصة عقارية متكاملة لخدمة صفقات العقارات الراقية والاستثمار المؤسسي، مدعمة بجولات الواقع الافتراضي وLiDAR، وتأكيد موثوقية التراخيص من الهيئة العامة للعقار وحجز زيارات المعاينة عبر الوسيط المعتمد.",
+    domain_data: {
+      verified_broker_name: "أ. سلطان الخالدي (ترخيص فال: 12000349)",
+      broker_phone: "+966501234567",
+      lidar_active: true,
+      matterport_model_id: "iw-riyadh-750m",
+      title_deed_number: "310109284711",
+      avg_square_meter_sar: 9133
+    }
+  },
+
+  // 10. Smart Car Rental & Automotive Telematics
+  {
+    project_id: "1272002",
+    app_name: "أسطول نجد — تأجير السيارات الذكي والتحكم الفوري",
+    tagline: "فتح السيارة بالهاتف، فحص العدادات عبر OBD-II، وتفويض تم فوري برقم الهوية",
+    preset: "car_rental",
+    layout_type: "car_rental",
+    theme: {
+      primary_color: "#0284c7",
+      accent_color: "#f59e0b"
+    },
+    banner: {
+      title: "استلم سيارتك خلال 3 دقائق بدون مكاتب",
+      subtitle: "فتح الأبواب وتشغيل المحرك مباشرة عبر البلوتوث والمفتاح الرقمي المشفر"
+    },
+    categories: ["سيارات فارهة", "عائلية SUV", "اقتصادية", "كهربائية EV"],
+    items: [
+      {
+        title: "رنج روفر فيلار 2026 — دفع رباعي",
+        desc: "محرك 6 سلندر توربو، مقاعد تدليك، نظام صوت ميريديان فائق",
+        price: "680 ر.س/يوم",
+        icon: "car",
+        badge: "تأمين شامل"
+      },
+      {
+        title: "لوسيد آير بيور — كهربائية 100%",
+        desc: "مدى قيادة 650 كم بالشحنة، تسارع 0-100 خلال 3.8 ثوان، قيادة ذاتية",
+        price: "850 ر.س/يوم",
+        icon: "zap",
+        badge: "شحن مجاني"
+      },
+      {
+        title: "تويوتا لاندكروزر VXR 2026",
+        desc: "مجهزة للبر والرحلات الطويلة، ثلاجة، نظام ترفيه خلفي",
+        price: "550 ر.س/يوم",
+        icon: "shield",
+        badge: "كيلومتر مفتوح"
+      }
+    ],
+    nav_tabs: [
+      { id: "fleet", label: "الأسطول", icon: "car" },
+      { id: "telematics", label: "التحكم بالسيارة", icon: "activity" },
+      { id: "contract", label: "العقد والتم", icon: "file-text" }
+    ],
+    commit_hash: "c922002",
+    proof_screenshots: [
+      {
+        title: "قراءة حساسات OBD-II CAN Bus",
+        path: "shots/1272002_01.png",
+        fallback: "CAN-Bus Fuel & Odometer Polled"
+      },
+      {
+        title: "المفتاح الرقمي المشفر BLE",
+        path: "shots/1272002_02.png",
+        fallback: "BLE Digital Key Handshake OK"
+      }
+    ],
+    detailed_desc: "منصة تأجير سيارات ذاتية الخدمة بالكامل بدون زيارة فروع، ترتبط بوحدات التيليماتكس داخل المركبات لمراقبة استهلاك الوقود ومستوى الزيت والمسافة المقطوعة، مع إصدار التفويض عبر منصة تم آلياً.",
+    domain_data: {
+      vehicle_model: "Range Rover Velar 2026",
+      plate_number: "د ب ع 9182",
+      fuel_level_pct: 88,
+      odometer_km: 14220,
+      doors_locked: true,
+      tire_pressure_psi: 34,
+      tamm_authorization_id: "TAMM-AUTH-9018274"
+    }
+  },
+
+  // 11. Luxury Salon, Spa & Wellness
+  {
+    project_id: "1272003",
+    app_name: "صالون لافندر — العناية الفاخرة وحجز المواعيد الذكي",
+    tagline: "اختيار خبيرة التجميل، حجز المواعيد بالدقيقة، وتعقيم المعدات بتقنية UV-C",
+    preset: "beauty_salon",
+    layout_type: "beauty_salon",
+    theme: {
+      primary_color: "#7e22ce",
+      accent_color: "#ec4899"
+    },
+    banner: {
+      title: "أوقات استرخاء وعناية متكاملة",
+      subtitle: "باقات متخصصة للبشرة والشعر والأظافر بأيدي خبيرات دوليات معتمدات"
+    },
+    categories: ["العناية بالشعر", "علاجات البشرة", "المساج والاسترخاء", "الأظافر والباديكير"],
+    items: [
+      {
+        title: "جلسة هيدرافاشيال متقدمة لتنقية البشرة",
+        desc: "تقشير عميق، سحب الشوائب بالسيروم، وترطيب بحمض الهيالورونيك النقي",
+        price: "380 ر.س",
+        icon: "sparkles",
+        badge: "الأكثر طلباً"
+      },
+      {
+        title: "علاج كافيار الكولاجين لترميم الشعر",
+        desc: "تغذية عميقة لألياف الشعر التالف مع حمام بخار أوزوني مدعم بالفيتامينات",
+        price: "450 ر.س",
+        icon: "scissors",
+        badge: "نتائج فورية"
+      },
+      {
+        title: "مساج استرخائي بالأحجار البركانية الدافئة",
+        desc: "جلسة 60 دقيقة لتحسين الدورة الدموية وإزالة تشنجات الظهر والكتفين",
+        price: "290 ر.س",
+        icon: "heart",
+        badge: "راحة تامة"
+      }
+    ],
+    nav_tabs: [
+      { id: "services", label: "الخدمات", icon: "sparkles" },
+      { id: "stylists", label: "الخبيرات والمواعيد", icon: "calendar" },
+      { id: "loyalty", label: "نقاط لافندر", icon: "award" }
+    ],
+    commit_hash: "d432003",
+    proof_screenshots: [
+      {
+        title: "حساس التعقيم بالأشعة UV-C",
+        path: "shots/1272003_01.png",
+        fallback: "UV-C Chamber Sterilization Logged"
+      },
+      {
+        title: "جدول المواعيد المتزامن لحظياً",
+        path: "shots/1272003_02.png",
+        fallback: "Calendar Slot Lock Verified"
+      }
+    ],
+    detailed_desc: "تطبيق حجوزات صالونات ومراكز سبا راقية يقضي على طوابير الانتظار، يوفر حجز خبيرة محددة مع تقييماتها ومحفظة أعمالها، ويتصل بمجسات تعقيم الأدوات لتأكيد السلامة الصحية للعميل.",
+    domain_data: {
+      active_specialist: "أ. نورة التميمي (أخصائية عناية بالبشرة)",
+      available_slots: ["10:30 ص", "12:00 م", "02:30 م", "05:00 م", "07:30 م"],
+      sterilization_status: "معقم 100% بتقنية UV-C",
+      loyalty_points: 340,
+      chamber_temp_c: 23
+    }
+  },
+
+  // 12. Live Real-time Auctions & Rare Collectibles
+  {
+    project_id: "1272004",
+    app_name: "مزادات الصافنات — المزادات الحية والنوادر والعقارات",
+    tagline: "مزايدة حية بالصوت والصورة، مضرب مزايدة لاسلكي BLE، ومطرقة إلكترونية موثقة",
+    preset: "auction_live",
+    layout_type: "auction_live",
+    theme: {
+      primary_color: "#991b1b",
+      accent_color: "#f59e0b"
+    },
+    banner: {
+      title: "المزاد المباشر نشط الآن — ينتهي خلال 00:38 ثانية",
+      subtitle: "المزايدة على خيل عربي أصيل خط صقلاوي جدراني بضمان بنكي محجوز"
+    },
+    categories: ["الخيل والنوادر", "العقارات الاستثمارية", "اللوحات المميزة", "الساعات الفاخرة"],
+    items: [
+      {
+        title: "المهر العربي الأصيل (سيف الصافنات)",
+        desc: "الأب: مروان الشقب، الأم: ريانة نجد، حاصل على بطولات دولية",
+        price: "285,000 ر.س",
+        icon: "award",
+        badge: "السعر الحالي الأعلى"
+      },
+      {
+        title: "لوحة مركبة مميزة رقم (ط و ق 1)",
+        desc: "لوحة خصوصي ملكية مسجلة وموثقة عبر منصة أبشر للمزادات",
+        price: "190,000 ر.س",
+        icon: "tag",
+        badge: "مزاد مفتوح"
+      },
+      {
+        title: "ساعة رولكس دايتونا بلاتينيوم 2025",
+        desc: "إصدار الذكرى السنوية، ميناء أزرق جليدي مع الأوراق والضمان الكامل",
+        price: "340,000 ر.س",
+        icon: "clock",
+        badge: "فحص أصلي معتمد"
+      }
+    ],
+    nav_tabs: [
+      { id: "live_auction", label: "المزاد المباشر", icon: "activity" },
+      { id: "my_bids", label: "مزايداتي", icon: "award" },
+      { id: "escrow", label: "الضمان المالي", icon: "shield" }
+    ],
+    commit_hash: "e542004",
+    proof_screenshots: [
+      {
+        title: "بث صوت المزايد بزمن استجابة Sub-100ms",
+        path: "shots/1272004_01.png",
+        fallback: "Ultra-low Latency WebRTC Opus Stream"
+      },
+      {
+        title: "مضرب المزايدة اللاسلكي BLE GATT",
+        path: "shots/1272004_02.png",
+        fallback: "Bid Paddle Hardware Event Triggered"
+      }
+    ],
+    detailed_desc: "منصة مزادات علنية إلكترونية حية وفائقة السرعة، تتيح للمزايدين رفع السعر بضغطة زر واحدة أو عبر مضرب المزايدة اللاسلكي المتصل بالبلوتوث، مع التوثيق المالي عبر الشيك المصرفي المصدق أو الحجز الفوري لمبلغ الضمان.",
+    domain_data: {
+      current_bid_sar: 285000,
+      minimum_step_sar: 5000,
+      leading_bidder_masked: "مزايد #419 (الرياض)",
+      countdown_seconds: 38,
+      escrow_deposit_sar: 50000,
+      escrow_status: "محجوز ومعتمد بنكياً",
+      total_bids_count: 34
+    }
+  },
+
+  // 13. Smart Interactive EdTech & Verified Certifications
+  {
+    project_id: "1272005",
+    app_name: "أكاديمية طويق — التعليم التفاعلي والشهادات المعتمدة",
+    tagline: "قاعات تدريب حية، قلم ذكي لمزامنة الشروحات، وشهادات رقمية موثقة بالبلوكتشين",
+    preset: "smart_education",
+    layout_type: "smart_education",
+    theme: {
+      primary_color: "#047857",
+      accent_color: "#3b82f6"
+    },
+    banner: {
+      title: "معسكر تطوير تطبيقات أندرويد المتقدمة (Jetpack Compose)",
+      subtitle: "محاضرة مباشرة تعمل الآن مع المدرب المعتمد مع بث تفاعلي للسبورة الذكية"
+    },
+    categories: ["تطوير البرمجيات", "الذكاء الاصطناعي", "الأمن السيبراني", "إدارة المنتجات"],
+    items: [
+      {
+        title: "معسكر Kotlin Multiplatform وCompose",
+        desc: "120 ساعة تدريبية عملية، بناء 6 مشاريع إنتاجية حقيقية، اعتماد تقني",
+        price: "1,850 ر.س",
+        icon: "code",
+        badge: "معتمد من المؤسسة العامة"
+      },
+      {
+        title: "دبلوم هندسة نماذج الذكاء الاصطناعي التوليدي",
+        desc: "تدريب على أدوات Google Cloud وLLM Agents وبناء واجهات API آمنة",
+        price: "2,400 ر.س",
+        icon: "cpu",
+        badge: "مقاعد محدودة"
+      },
+      {
+        title: "شهادة قيادة الأمن السيبراني للمؤسسات",
+        desc: "إعداد لاختبارات CISSP مع محاكاة بيئات الهجوم والدفاع السيبراني",
+        price: "1,500 ر.س",
+        icon: "shield",
+        badge: "مسائي مرن"
+      }
+    ],
+    nav_tabs: [
+      { id: "classroom", label: "القاعة الحية", icon: "video" },
+      { id: "assignments", label: "الواجبات والشروحات", icon: "book-open" },
+      { id: "certificates", label: "الشهادات", icon: "award" }
+    ],
+    commit_hash: "f652005",
+    proof_screenshots: [
+      {
+        title: "قلم الرسم والسبورة الذكية 4096 ضغط",
+        path: "shots/1272005_01.png",
+        fallback: "Smart Stylus Digitizer Pressure 4096 Sync"
+      },
+      {
+        title: "الشهادة الرقمية المعتمدة برمز QR",
+        path: "shots/1272005_02.png",
+        fallback: "Cryptographic Certificate Hash Verified"
+      }
+    ],
+    detailed_desc: "منصة تدريب تقني ومهني تفاعلية تدعم الحضور الافتراضي وتزامن كتابات المحاضر على الشاشات اللوحية بدقة 4096 مستوى ضغط، وتصدر شهادات التخرج برقم اعتماد وطني ورمز فحص مشفر لا يقبل التزوير.",
+    domain_data: {
+      live_class_topic: "هندسة الطبقات المعمارية Clean MVVM في Jetpack Compose",
+      instructor_name: "م. خالد السديري (خبير تقني)",
+      active_students_count: 84,
+      attendance_beacon_detected: true,
+      quiz_score_pct: 96,
+      certificate_hash: "0x78ab310cd9912048"
+    }
+  },
+
+  // 14. Logistics, Smart Warehouse & Inventory WMS
+  {
+    project_id: "1272006",
+    app_name: "مستودعات مسار — إدارة المخزون والجرد بالباركود وRFID",
+    tagline: "جرد سريع بماسحات 2D ليزرية، وزن الطبالي بالبلوتوث، وطباعة بوالص الشحن",
+    preset: "logistics_warehouse",
+    layout_type: "logistics_warehouse",
+    theme: {
+      primary_color: "#b45309",
+      accent_color: "#10b981"
+    },
+    banner: {
+      title: "مستودع السلي المركزي — الرياض (القطاع B4)",
+      subtitle: "تم مسح 1,840 شحنة اليوم مع مطابقة المخزون بنسبة دقة 99.8%"
+    },
+    categories: ["استلام الشحنات", "الصرف والتجهيز", "الجرد الدوري", "طباعة بوالص"],
+    items: [
+      {
+        title: "طبلية قطع غيار سيارات — موقع B-12-04",
+        desc: "الباركود: PAL-901827، الوزن: 380 كجم، 48 كرتون قطع تبريد أصلية",
+        price: "تم الفحص والوزن",
+        icon: "package",
+        badge: "مطابق 100%"
+      },
+      {
+        title: "حاوية أجهزة إلكترونية — موقع A-04-01",
+        desc: "الباركود: PAL-881290، الوزن: 210 كجم، أجهزة لوحية وشاشات رقمية",
+        price: "بانتظار الصرف",
+        icon: "cpu",
+        badge: "عاجل"
+      },
+      {
+        title: "طبلية مستلزمات طبية معقمة — موقع C-08-02",
+        desc: "الباركود: PAL-772109، الوزن: 140 كجم، شحنة مبردة تحت 18°C",
+        price: "مخزن مبرد",
+        icon: "thermometer",
+        badge: "حساس للحرارة"
+      }
+    ],
+    nav_tabs: [
+      { id: "scanner", label: "مسح الباركود", icon: "qr-code" },
+      { id: "inventory", label: "سجل المخزون", icon: "layers" },
+      { id: "shipping", label: "بوالص الشحن", icon: "printer" }
+    ],
+    commit_hash: "a762006",
+    proof_screenshots: [
+      {
+        title: "مسح ماسح الباركود الليزري 2D",
+        path: "shots/1272006_01.png",
+        fallback: "Industrial Zebra/Honeywell Scanner Interfaced"
+      },
+      {
+        title: "ميزان الطبالي الصناعي بلوتوث",
+        path: "shots/1272006_02.png",
+        fallback: "Bluetooth Industrial Pallet Scale Polled"
+      }
+    ],
+    detailed_desc: "نظام إدارة مستودعات ذكي WMS مصمم لفرق العمل الميداني على أجهزة Zebra وHoneywell الوعرة بنظام أندرويد، يتكامل مع الموازين الصناعية لمطابقة الأوزان وطابعات ملصقات الشحن الحرارية Zebra ZPL.",
+    domain_data: {
+      current_scanned_barcode: "PAL-901827-RYD",
+      current_pallet_weight_kg: 380.5,
+      scale_connected: true,
+      scale_model: "Mettler Toledo Industrial BLE",
+      printer_status: "Zebra ZD620 جاهزة (100% ورق)",
+      shelf_location: "Zone B / Rack 12 / Bin 04"
+    }
   }
 ];
+

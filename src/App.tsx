@@ -25,6 +25,7 @@ import { templateFiles } from './data/templatesData';
 import { downloadProjectZip } from './lib/zipExport';
 import { Cpu, CheckCircle2 } from 'lucide-react';
 import { SmartAgentControlCenter } from './components/agent/SmartAgentControlCenter';
+import { CustomPresetStudio } from './components/diversity/CustomPresetStudio';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('smart-agent');
@@ -103,6 +104,14 @@ export default function App() {
               setSimulatedProjectId(pid);
               setActiveTab('simulator');
             }}
+          />
+        )}
+        {activeTab === 'preset-studio' && (
+          <CustomPresetStudio
+            onLoadInSimulator={(spec) => {
+              setSimulatedProjectId(spec.project_id);
+            }}
+            onNavigateToSimulator={() => setActiveTab('simulator')}
           />
         )}
         {activeTab === 'diversity' && <DesignDiversityEngine />}

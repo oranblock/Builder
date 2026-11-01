@@ -37,6 +37,21 @@ import {
   Monitor,
   ShoppingBag,
   ExternalLink,
+  Home,
+  Building,
+  Car,
+  Scissors,
+  Award,
+  Tag,
+  Video,
+  BookOpen,
+  FileText,
+  Package,
+  Box,
+  Key,
+  Sliders,
+  Shield,
+  AlertCircle,
 } from 'lucide-react';
 import { UniversalAppSpec, realFactoryProjects, LayoutType } from '../../data/factoryProjectsData';
 import { downloadSingleFile } from '../../lib/zipExport';
@@ -70,6 +85,27 @@ export const UniversalMobileShell: React.FC<UniversalMobileShellProps> = ({
 
   // Agritech valves state
   const [valves, setValves] = useState<{ [key: string]: boolean }>({ v1: true, v2: false });
+
+  // Real Estate state
+  const [tour3dActive, setTour3dActive] = useState<boolean>(false);
+
+  // Car Rental telematics state
+  const [carDoorsLocked, setCarDoorsLocked] = useState<boolean>(true);
+
+  // Beauty Salon booking state
+  const [selectedSalonSlot, setSelectedSalonSlot] = useState<string>('10:30 ص');
+
+  // Live Auction state
+  const [auctionBid, setAuctionBid] = useState<number>(285000);
+  const [auctionSeconds, setAuctionSeconds] = useState<number>(38);
+
+  // Smart Education state
+  const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
+
+  // Warehouse WMS state
+  const [palletWeight, setPalletWeight] = useState<number>(380.5);
+  const [palletAdjustQty, setPalletAdjustQty] = useState<number>(48);
+  const [palletLabelPrinted, setPalletLabelPrinted] = useState<boolean>(false);
 
   // In-memory editable JSON spec
   const initialProject =
@@ -1064,6 +1100,700 @@ export const UniversalMobileShell: React.FC<UniversalMobileShellProps> = ({
     );
   };
 
+  // 9. PROPTECH & REAL ESTATE (e.g. #1272001 منصة إيوان)
+  const renderRealEstateLayout = () => {
+    const domain = activeSpec.domain_data || {};
+    return (
+      <div className="space-y-4">
+        {/* 3D LiDAR Stage / Virtual Tour */}
+        <div className="rounded-2xl bg-gradient-to-b from-blue-950/70 to-slate-950 border border-blue-800/80 p-4 space-y-3 shadow-xl">
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="flex items-center gap-1.5 text-blue-300 font-bold">
+              <Box className="w-3.5 h-3.5 text-amber-400" />
+              <span>جولة LiDAR الافتراضية ثلاثية الأبعاد</span>
+            </span>
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
+              صك موثق 100%
+            </span>
+          </div>
+
+          {/* Virtual Stage Simulation */}
+          <div className="relative h-32 rounded-xl bg-slate-950 border border-blue-500/30 overflow-hidden flex flex-col items-center justify-center p-3 text-center">
+            {tour3dActive ? (
+              <div className="space-y-2 animate-in fade-in duration-300">
+                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-mono border border-blue-500/40">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                  </span>
+                  <span>Matterport Pro3 LiDAR Stream (60 FPS)</span>
+                </div>
+                <p className="text-[10px] text-slate-300">جولة تفاعلية حية داخل فيلا حي حطين (750 م²)</p>
+                <button
+                  onClick={() => setTour3dActive(false)}
+                  className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-medium"
+                >
+                  إغلاق الجولة 3D
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <div className="w-10 h-10 mx-auto rounded-full bg-blue-900/60 border border-blue-600/50 flex items-center justify-center text-blue-300">
+                  <Box className="w-5 h-5" />
+                </div>
+                <div className="text-[11px] font-bold text-slate-200">معاينة تفاعلية بالواقع الافتراضي</div>
+                <button
+                  onClick={() => {
+                    setTour3dActive(true);
+                    triggerToast('جاري تحميل سحابة النقاط المكانية LiDAR 3D');
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold shadow-md transition-colors"
+                >
+                  بدء الجولة الافتراضية 360°
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Title Deed & Price Stats */}
+          <div className="grid grid-cols-2 gap-2 text-center font-mono">
+            <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+              <span className="text-[9px] text-slate-400 block">رقم الصك الإلكتروني</span>
+              <span className="text-[11px] font-bold text-amber-300 truncate block">
+                {domain.title_deed_number || '310109284711'}
+              </span>
+            </div>
+            <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+              <span className="text-[9px] text-slate-400 block">متوسط المتر المربع</span>
+              <span className="text-[11px] font-bold text-emerald-400">
+                {domain.avg_square_meter_sar || 9133} ر.س/م²
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Verified Broker Card */}
+        <div className="rounded-xl bg-slate-950 border border-slate-800 p-3 space-y-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-amber-950/60 border border-amber-600/40 flex items-center justify-center text-amber-400">
+                <Award className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-slate-100 block">
+                  {domain.verified_broker_name || 'أ. سلطان الخالدي'}
+                </span>
+                <span className="text-[10px] text-emerald-400">وسيط عقاري مرخص (فال)</span>
+              </div>
+            </div>
+            <button
+              onClick={() => triggerToast('جاري فتح محادثة الواتساب مع الوسيط المعتمد')}
+              className="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold shadow-sm transition-colors"
+            >
+              تواصل مباشر
+            </button>
+          </div>
+        </div>
+
+        {/* Property Listings */}
+        <div className="space-y-2">
+          <span className="text-xs font-bold text-slate-200 block">العقارات المتاحة للإفراغ الفوري</span>
+          <div className="space-y-2">
+            {activeSpec.items.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-xl bg-slate-950 border border-slate-800/90 space-y-2 hover:border-blue-700/60 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="space-y-0.5">
+                    <h4 className="text-xs font-bold text-slate-100">{item.title}</h4>
+                    <p className="text-[10px] text-slate-400 line-clamp-2">{item.desc}</p>
+                  </div>
+                  {item.badge && (
+                    <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-amber-950/60 text-amber-300 border border-amber-800/40 shrink-0">
+                      {item.badge}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center justify-between pt-1 border-t border-slate-900">
+                  <span className="text-xs font-bold font-mono text-emerald-400">{item.price}</span>
+                  <button
+                    onClick={() => triggerToast(`تم تسجيل موعد معاينة: ${item.title}`)}
+                    className="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold shadow-sm transition-colors"
+                  >
+                    حجز معاينة
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // 10. SMART CAR RENTAL & AUTOMOTIVE TELEMATICS (e.g. #1272002 أسطول نجد)
+  const renderCarRentalLayout = () => {
+    const domain = activeSpec.domain_data || {};
+    return (
+      <div className="space-y-4">
+        {/* Active Vehicle Telematics Card */}
+        <div className="rounded-2xl bg-gradient-to-b from-sky-950/70 to-slate-950 border border-sky-800/80 p-4 space-y-3 shadow-xl">
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="flex items-center gap-1.5 text-sky-300 font-bold">
+              <Car className="w-3.5 h-3.5 text-sky-400" />
+              <span>وحدة التحكم عن بعد (CAN-Bus OBD-II)</span>
+            </span>
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
+              متصل BLE
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="text-xs font-bold text-white">{domain.vehicle_model || 'Range Rover Velar 2026'}</h4>
+              <span className="text-[10px] font-mono text-slate-400">اللوحة: {domain.plate_number || 'د ب ع 9182'}</span>
+            </div>
+            <span className="text-xs font-mono font-bold text-amber-300">
+              {domain.odometer_km || 14220} كم
+            </span>
+          </div>
+
+          {/* Telematics Metrics */}
+          <div className="grid grid-cols-3 gap-2 text-center font-mono">
+            <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+              <span className="text-[9px] text-slate-400 block">مستوى الوقود</span>
+              <span className="text-xs font-bold text-emerald-400">{domain.fuel_level_pct || 88}%</span>
+            </div>
+            <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+              <span className="text-[9px] text-slate-400 block">ضغط الإطارات</span>
+              <span className="text-xs font-bold text-sky-400">{domain.tire_pressure_psi || 34} PSI</span>
+            </div>
+            <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+              <span className="text-[9px] text-slate-400 block">حالة الأبواب</span>
+              <span className={`text-xs font-bold ${carDoorsLocked ? 'text-amber-400' : 'text-emerald-400'}`}>
+                {carDoorsLocked ? 'مقفلة' : 'مفتوحة'}
+              </span>
+            </div>
+          </div>
+
+          {/* Digital Key Controls */}
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            <button
+              onClick={() => {
+                setCarDoorsLocked(!carDoorsLocked);
+                triggerToast(carDoorsLocked ? 'تم فتح أبواب السيارة عبر المفتاح الرقمي' : 'تم قفل أبواب السيارة وتفعيل الإنذار');
+              }}
+              className={`py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md ${
+                carDoorsLocked
+                  ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                  : 'bg-amber-600 hover:bg-amber-500 text-white'
+              }`}
+            >
+              <Key className="w-3.5 h-3.5" />
+              <span>{carDoorsLocked ? 'فتح الأبواب (Unlock)' : 'قفل الأبواب (Lock)'}</span>
+            </button>
+            <button
+              onClick={() => triggerToast('تم تشغيل المحرك عن بعد وضبط التكييف على 21°C')}
+              className="py-2 rounded-xl bg-sky-700/60 hover:bg-sky-700 text-sky-200 text-xs font-semibold border border-sky-600/40 flex items-center justify-center gap-1.5 transition-colors"
+            >
+              <Zap className="w-3.5 h-3.5 text-amber-400" />
+              <span>تشغيل المحرك</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Fleet Listings */}
+        <div className="space-y-2">
+          <span className="text-xs font-bold text-slate-200 block">أسطول السيارات المتوفر للاستلام الفوري</span>
+          <div className="space-y-2">
+            {activeSpec.items.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-xl bg-slate-950 border border-slate-800/90 flex items-center justify-between gap-3 hover:border-sky-700/60 transition-colors"
+              >
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Car className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                    <h4 className="text-xs font-bold text-slate-100 truncate">{item.title}</h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 line-clamp-1">{item.desc}</p>
+                </div>
+                <div className="text-left shrink-0">
+                  <span className="text-xs font-bold font-mono text-amber-400 block mb-1">{item.price}</span>
+                  <button
+                    onClick={() => triggerToast(`تم بدء حجز السيارة: ${item.title}`)}
+                    className="px-2.5 py-1 rounded bg-sky-600 hover:bg-sky-500 text-white text-[10px] font-bold shadow-sm transition-colors"
+                  >
+                    حجز فوري
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // 11. LUXURY SALON, SPA & WELLNESS (e.g. #1272003 صالون لافندر)
+  const renderBeautySalonLayout = () => {
+    const domain = activeSpec.domain_data || {};
+    const slots = domain.available_slots || ['10:30 ص', '12:00 م', '02:30 م', '05:00 م', '07:30 م'];
+    return (
+      <div className="space-y-4">
+        {/* Specialist & Sterilization Card */}
+        <div className="rounded-2xl bg-gradient-to-b from-purple-950/70 to-slate-950 border border-purple-800/80 p-4 space-y-3 shadow-xl">
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="flex items-center gap-1.5 text-purple-300 font-bold">
+              <Scissors className="w-3.5 h-3.5 text-pink-400" />
+              <span>حجز موعد عناية مخصص</span>
+            </span>
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
+              {domain.sterilization_status || 'معقم UV-C'}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-purple-900/80 border border-purple-600/50 flex items-center justify-center text-purple-200 font-bold shrink-0">
+              <Scissors className="w-5 h-5 text-pink-300" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h4 className="text-xs font-bold text-white truncate">{domain.active_specialist || 'أ. نورة التميمي'}</h4>
+              <p className="text-[10px] text-purple-300">خبيرة عناية معتمدة · تقييم 4.9 ★</p>
+            </div>
+            <div className="text-left font-mono">
+              <span className="text-[9px] text-slate-400 block">نقاط لافندر</span>
+              <span className="text-xs font-bold text-pink-400">{domain.loyalty_points || 340} نقطة</span>
+            </div>
+          </div>
+
+          {/* Live Slot Picker */}
+          <div className="space-y-1.5 pt-1 border-t border-purple-900/40">
+            <span className="text-[10px] text-slate-300 font-semibold block">المواعيد المتاحة لليوم:</span>
+            <div className="grid grid-cols-5 gap-1.5 text-center font-mono text-[10px]">
+              {slots.map((slot: string, idx: number) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setSelectedSalonSlot(slot);
+                    triggerToast(`تم اختيار موعد: ${slot}`);
+                  }}
+                  className={`py-1.5 rounded-lg border transition-all ${
+                    selectedSalonSlot === slot
+                      ? 'bg-purple-600 text-white border-purple-400 font-bold shadow-sm'
+                      : 'bg-slate-900/80 text-slate-300 border-slate-800 hover:border-slate-700'
+                  }`}
+                >
+                  {slot}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Services Catalog */}
+        <div className="space-y-2">
+          <span className="text-xs font-bold text-slate-200 block">الباقات التجميلية والعلاجية</span>
+          <div className="space-y-2">
+            {activeSpec.items.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-xl bg-slate-950 border border-slate-800/90 flex items-center justify-between gap-3 hover:border-purple-700/60 transition-colors"
+              >
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-pink-400 shrink-0" />
+                    <h4 className="text-xs font-bold text-slate-100 truncate">{item.title}</h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 line-clamp-1">{item.desc}</p>
+                </div>
+                <div className="text-left shrink-0">
+                  <span className="text-xs font-bold font-mono text-purple-300 block mb-1">{item.price}</span>
+                  <button
+                    onClick={() => triggerToast(`تم تأكيد حجز ${item.title} في تمام ${selectedSalonSlot}`)}
+                    className="px-2.5 py-1 rounded bg-purple-600 hover:bg-purple-500 text-white text-[10px] font-bold shadow-sm transition-colors"
+                  >
+                    تأكيد الحجز
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // 12. LIVE REAL-TIME AUCTIONS & RARE COLLECTIBLES (e.g. #1272004 مزادات الصافنات)
+  const renderAuctionLiveLayout = () => {
+    const domain = activeSpec.domain_data || {};
+    return (
+      <div className="space-y-4">
+        {/* Live Bidding Hammer & Timer Card */}
+        <div className="rounded-2xl bg-gradient-to-b from-red-950/70 to-slate-950 border border-red-800/80 p-4 space-y-3 shadow-xl">
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="flex items-center gap-1.5 text-red-300 font-bold">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              </span>
+              <span>المزاد العلني المباشر نشط</span>
+            </span>
+            <span className="text-[10px] font-mono text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800/40">
+              مضرب BLE متصل
+            </span>
+          </div>
+
+          <div className="text-center space-y-1">
+            <span className="text-[10px] text-slate-400 block">السعر الأعلى الحالي (Leading Bid):</span>
+            <div className="text-3xl font-extrabold font-mono text-amber-400 tracking-tight">
+              {auctionBid.toLocaleString()} <span className="text-sm font-sans font-bold text-slate-300">ر.س</span>
+            </div>
+            <div className="text-[11px] text-slate-300">
+              المزايد الحالي: <span className="text-emerald-400 font-mono font-bold">{domain.leading_bidder_masked || 'مزايد #419'}</span>
+            </div>
+          </div>
+
+          {/* Countdown Hammer Bar */}
+          <div className="p-2.5 rounded-xl bg-slate-950 border border-red-500/40 flex items-center justify-between font-mono text-xs">
+            <div className="flex items-center gap-2 text-red-400">
+              <Clock className="w-4 h-4 animate-spin" />
+              <span>ضربة المطرقة بعد:</span>
+            </div>
+            <span className="text-base font-bold text-red-400">00:{auctionSeconds < 10 ? `0${auctionSeconds}` : auctionSeconds} ثانية</span>
+          </div>
+
+          {/* Quick Bid Increment Buttons */}
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            <button
+              onClick={() => {
+                setAuctionBid((prev) => prev + 5000);
+                setAuctionSeconds(45);
+                triggerToast('تم رفع المزايدة بمقدار +5,000 ر.س');
+              }}
+              className="py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold font-mono shadow-md transition-colors flex items-center justify-center gap-1.5"
+            >
+              <span>+5,000 ر.س</span>
+            </button>
+            <button
+              onClick={() => {
+                setAuctionBid((prev) => prev + 10000);
+                setAuctionSeconds(45);
+                triggerToast('تم رفع المزايدة بمقدار +10,000 ر.س');
+              }}
+              className="py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold font-mono shadow-md transition-colors flex items-center justify-center gap-1.5"
+            >
+              <span>+10,000 ر.س</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Escrow Guarantee Status */}
+        <div className="rounded-xl bg-slate-950 border border-slate-800 p-3 space-y-1.5">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-slate-200 flex items-center gap-1.5">
+              <Shield className="w-3.5 h-3.5 text-emerald-400" />
+              <span>الضمان المصرفي المحجوز</span>
+            </span>
+            <span className="text-emerald-400 font-mono font-bold">50,000 ر.س</span>
+          </div>
+          <p className="text-[10px] text-slate-400">
+            مبلغ الضمان محجوز بنكياً ومعتمد وفق لوائح المزادات الرسمية.
+          </p>
+        </div>
+
+        {/* Auction Items */}
+        <div className="space-y-2">
+          <span className="text-xs font-bold text-slate-200 block">العروض المطروحة في المزاد الحالي</span>
+          <div className="space-y-2">
+            {activeSpec.items.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-xl bg-slate-950 border border-slate-800/90 flex items-center justify-between gap-3 hover:border-red-700/60 transition-colors"
+              >
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Award className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <h4 className="text-xs font-bold text-slate-100 truncate">{item.title}</h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 line-clamp-1">{item.desc}</p>
+                </div>
+                <div className="text-left shrink-0">
+                  <span className="text-xs font-bold font-mono text-amber-400 block">{item.price}</span>
+                  <span className="text-[9px] text-slate-500 block">السعر الافتتاحي</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // 13. SMART EDTECH & INTERACTIVE TRAINING (e.g. #1272005 أكاديمية طويق)
+  const renderSmartEducationLayout = () => {
+    const domain = activeSpec.domain_data || {};
+    return (
+      <div className="space-y-4">
+        {/* Live Classroom Stage */}
+        <div className="rounded-2xl bg-gradient-to-b from-emerald-950/70 to-slate-950 border border-emerald-800/80 p-4 space-y-3 shadow-xl">
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="flex items-center gap-1.5 text-emerald-300 font-bold">
+              <Video className="w-3.5 h-3.5 text-emerald-400" />
+              <span>القاعة التدريبية التفاعلية الحية</span>
+            </span>
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
+              {domain.active_students_count || 84} طالب متصل
+            </span>
+          </div>
+
+          <div className="space-y-1">
+            <h4 className="text-xs font-bold text-white">
+              {domain.live_class_topic || 'هندسة الطبقات المعمارية Clean MVVM في Jetpack Compose'}
+            </h4>
+            <p className="text-[10px] text-slate-300">المدرب المعتمد: {domain.instructor_name || 'م. خالد السديري'}</p>
+          </div>
+
+          {/* Smart Stylus Digitizer Status */}
+          <div className="p-2.5 rounded-xl bg-slate-950 border border-emerald-500/30 flex items-center justify-between text-xs">
+            <span className="text-slate-300 text-[10px] flex items-center gap-1.5">
+              <Code2 className="w-3.5 h-3.5 text-blue-400" />
+              <span>مزامنة شروحات القلم الذكي (حساسية 4096)</span>
+            </span>
+            <span className="text-[10px] font-mono text-emerald-400">متزامن 100%</span>
+          </div>
+
+          {/* Quiz & Interaction Actions */}
+          <button
+            onClick={() => {
+              setQuizSubmitted(true);
+              triggerToast('تم إرسال إجابة الاختبار بنجاح — النتيجة 96% ممتاز');
+            }}
+            className="w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors shadow-md flex items-center justify-center gap-1.5"
+          >
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            <span>{quizSubmitted ? 'تم تسليم الاختبار التفاعلي (96%)' : 'بدء الاختبار التفاعلي السريع'}</span>
+          </button>
+        </div>
+
+        {/* Blockchain Certified Credential */}
+        <div className="rounded-xl bg-slate-950 border border-slate-800 p-3 space-y-1.5 font-mono text-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-slate-200 font-sans font-bold flex items-center gap-1.5">
+              <Award className="w-3.5 h-3.5 text-amber-400" />
+              <span>شهادة التخرج الرقمية المعتمدة</span>
+            </span>
+            <span className="text-emerald-400 font-bold">موثقة</span>
+          </div>
+          <div className="text-[10px] text-slate-400 break-all">
+            كود التحقق: {domain.certificate_hash || '0x78ab310cd9912048'}
+          </div>
+        </div>
+
+        {/* Courses & Modules Catalog */}
+        <div className="space-y-2">
+          <span className="text-xs font-bold text-slate-200 block">المعسكرات والدورات المعتمدة</span>
+          <div className="space-y-2">
+            {activeSpec.items.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-xl bg-slate-950 border border-slate-800/90 flex items-center justify-between gap-3 hover:border-emerald-700/60 transition-colors"
+              >
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <h4 className="text-xs font-bold text-slate-100 truncate">{item.title}</h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 line-clamp-1">{item.desc}</p>
+                </div>
+                <div className="text-left shrink-0">
+                  <span className="text-xs font-bold font-mono text-emerald-400 block mb-1">{item.price}</span>
+                  <button
+                    onClick={() => triggerToast(`تم التسجيل في معسكر: ${item.title}`)}
+                    className="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold shadow-sm transition-colors"
+                  >
+                    تسجيل
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // 14. LOGISTICS, SMART WAREHOUSE & INVENTORY WMS (e.g. #1272006 مستودعات مسار)
+  const renderLogisticsWarehouseLayout = () => {
+    const domain = activeSpec.domain_data || {};
+    return (
+      <div className="space-y-4">
+        {/* Barcode Gun & Industrial Scale HUD */}
+        <div className="rounded-2xl bg-gradient-to-b from-amber-950/70 to-slate-950 border border-amber-800/80 p-4 space-y-3 shadow-xl">
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="flex items-center gap-1.5 text-amber-300 font-bold">
+              <QrCode className="w-3.5 h-3.5 text-amber-400" />
+              <span>ماسح 2D ليزري وميزان صناعي</span>
+            </span>
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
+              ميزان BLE متصل
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between font-mono">
+            <div>
+              <span className="text-[9px] text-slate-400 block">الباركود المفحوص:</span>
+              <span className="text-xs font-bold text-amber-300">{domain.current_scanned_barcode || 'PAL-901827-RYD'}</span>
+            </div>
+            <div className="text-left">
+              <span className="text-[9px] text-slate-400 block">موقع الرف (Bin):</span>
+              <span className="text-xs font-bold text-emerald-400">{domain.shelf_location || 'Zone B / Rack 12'}</span>
+            </div>
+          </div>
+
+          {/* Weight & Pallet Quantity Adjuster */}
+          <div className="grid grid-cols-2 gap-2 text-center font-mono">
+            <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
+              <span className="text-[9px] text-slate-400 block">الوزن اللحظي للطبلية</span>
+              <span className="text-sm font-bold text-sky-400">{palletWeight} كجم</span>
+            </div>
+            <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col justify-center">
+              <span className="text-[9px] text-slate-400 block">الكمية المسجلة</span>
+              <div className="flex items-center justify-center gap-2 mt-1">
+                <button
+                  onClick={() => setPalletAdjustQty((q) => Math.max(1, q - 1))}
+                  className="w-5 h-5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center justify-center font-bold"
+                >
+                  -
+                </button>
+                <span className="text-sm font-bold text-amber-300">{palletAdjustQty}</span>
+                <button
+                  onClick={() => setPalletAdjustQty((q) => q + 1)}
+                  className="w-5 h-5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center justify-center font-bold"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* ZPL Thermal Print Button */}
+          <button
+            onClick={() => {
+              setPalletLabelPrinted(true);
+              triggerToast('تم إرسال أمر طباعة ملصق الباركود ZPL إلى طابعة Zebra ZD620');
+            }}
+            className="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-1.5"
+          >
+            <Printer className="w-3.5 h-3.5" />
+            <span>{palletLabelPrinted ? 'تمت طباعة بوليصة الشحن بنجاح ✓' : 'طباعة بوليصة طبلية حرارية (Zebra ZPL)'}</span>
+          </button>
+        </div>
+
+        {/* Pallet Manifests */}
+        <div className="space-y-2">
+          <span className="text-xs font-bold text-slate-200 block">قائمة طبالي الشحن والمطابقة الميدانية</span>
+          <div className="space-y-2">
+            {activeSpec.items.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-xl bg-slate-950 border border-slate-800/90 flex items-center justify-between gap-3 hover:border-amber-700/60 transition-colors"
+              >
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Package className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <h4 className="text-xs font-bold text-slate-100 truncate">{item.title}</h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 line-clamp-1">{item.desc}</p>
+                </div>
+                <div className="text-left shrink-0">
+                  <span className="text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/40">
+                    {item.price}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // 15. CUSTOM BESPOKE PRESET LAYOUT (Fully customizable for agents & users)
+  const renderCustomLayout = () => {
+    return (
+      <div className="space-y-4">
+        {/* Custom Spec Header Stage */}
+        <div
+          className="rounded-2xl p-4 space-y-3 shadow-xl border"
+          style={{
+            backgroundColor: `${activeSpec.theme?.primary_color || '#1e293b'}25`,
+            borderColor: `${activeSpec.theme?.primary_color || '#3b82f6'}80`
+          }}
+        >
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="flex items-center gap-1.5 font-bold text-white">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>قالب مخصص غير مكرر (Bespoke Preset)</span>
+            </span>
+            <span className="text-[10px] font-mono text-emerald-400 bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800">
+              Novelty 100%
+            </span>
+          </div>
+
+          <div className="space-y-1">
+            <h4 className="text-sm font-bold text-white">{activeSpec.app_name}</h4>
+            <p className="text-[11px] text-slate-300">{activeSpec.tagline}</p>
+          </div>
+
+          {/* Dynamic Categories */}
+          <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-none">
+            {activeSpec.categories.map((cat, idx) => (
+              <span
+                key={idx}
+                className="px-2.5 py-1 rounded-lg text-[10px] font-semibold whitespace-nowrap bg-slate-900/90 text-slate-200 border border-slate-800"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Custom Items Catalog */}
+        <div className="space-y-2">
+          <span className="text-xs font-bold text-slate-200 block">العناصر والخدمات المخصصة</span>
+          <div className="space-y-2">
+            {activeSpec.items.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-xl bg-slate-950 border border-slate-800/90 flex items-center justify-between gap-3 hover:border-slate-700 transition-colors"
+              >
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <h4 className="text-xs font-bold text-slate-100 truncate">{item.title}</h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 line-clamp-1">{item.desc}</p>
+                </div>
+                <div className="text-left shrink-0">
+                  <span className="text-xs font-bold font-mono text-amber-400 block mb-1">{item.price}</span>
+                  <button
+                    onClick={() => triggerToast(`تم تنفيذ الإجراء على: ${item.title}`)}
+                    className="px-2.5 py-1 rounded text-white text-[10px] font-bold shadow-sm transition-colors"
+                    style={{ backgroundColor: activeSpec.theme?.primary_color || '#2563eb' }}
+                  >
+                    اختيار
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Selector for Layout View
   const renderLayoutContent = () => {
     switch (activeSpec.layout_type) {
@@ -1083,6 +1813,20 @@ export const UniversalMobileShell: React.FC<UniversalMobileShellProps> = ({
         return renderTelehealthLayout();
       case 'agritech':
         return renderAgritechLayout();
+      case 'real_estate':
+        return renderRealEstateLayout();
+      case 'car_rental':
+        return renderCarRentalLayout();
+      case 'beauty_salon':
+        return renderBeautySalonLayout();
+      case 'auction_live':
+        return renderAuctionLiveLayout();
+      case 'smart_education':
+        return renderSmartEducationLayout();
+      case 'logistics_warehouse':
+        return renderLogisticsWarehouseLayout();
+      case 'custom':
+        return renderCustomLayout();
       default:
         return renderServicesLayout();
     }

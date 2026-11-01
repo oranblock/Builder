@@ -26,6 +26,7 @@ interface ScoutAlert {
   matchedKeywords: string[];
   alertSent: boolean;
   rawDesc: string;
+  platform?: string;
 }
 
 export const MostaqlScoutMonitor: React.FC = () => {
@@ -34,6 +35,10 @@ export const MostaqlScoutMonitor: React.FC = () => {
   const [nextPollCountdown, setNextPollCountdown] = useState<number>(45);
   const [hourlyAlertsCount, setHourlyAlertsCount] = useState<number>(2);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [targetCategoryUrl, setTargetCategoryUrl] = useState<string>("https://mostaql.com/projects/development");
+  const [strictAppsOnly, setStrictAppsOnly] = useState<boolean>(true);
+  const [selectedPlatformFilter, setSelectedPlatformFilter] = useState<string>("all");
+  const [rejectedNonAppsCount, setRejectedNonAppsCount] = useState<number>(28);
 
   const [alerts, setAlerts] = useState<ScoutAlert[]>([
     {
@@ -44,26 +49,29 @@ export const MostaqlScoutMonitor: React.FC = () => {
       detectedAt: "منذ 12 دقيقة",
       matchedKeywords: ["مطعم", "توصيل", "سلة", "وجبات"],
       alertSent: true,
+      platform: "Cross-Platform Mobile (Android & iOS)",
       rawDesc: "نحتاج تطبيق توصيل مطاعم احترافي يدعم تتبع السائق لحظياً على الخريطة مع سلة مشتريات وبوابات دفع إلكترونية ومدعوم بلوحة تحكم."
     },
     {
       id: "1270416",
       title: "تطبيق تدريب رياضي ذكي يدعم الاتصال بموازين البلوتوث الذكية",
-      preset: "standard",
+      preset: "fitness",
       budget: "$1,000 - $2,500",
       detectedAt: "منذ 48 دقيقة",
       matchedKeywords: ["بلوتوث", "ميزان", "رياضة", "حساب السعرات"],
       alertSent: true,
+      platform: "Android Native (Jetpack Compose)",
       rawDesc: "مطلوب تطبيق للياقة البدنية مع تكامل مباشر مع موازين BLE GATT 0x181D لقراءة الوزن ومزامنة السعرات اليومية."
     },
     {
       id: "1266318",
       title: "برمجة كاشير محمول للمتاجر متوافق مع هيئة الزكاة المرحلة الثانية",
-      preset: "ecommerce",
+      preset: "pos_cashier",
       budget: "$1,500 - $3,000",
       detectedAt: "منذ ساعتين",
       matchedKeywords: ["كاشير", "زاتكا", "ZATCA", "طباعة فواتير"],
       alertSent: true,
+      platform: "Kotlin Multiplatform (KMP)",
       rawDesc: "نظام كاشير مالي وإدارة مخزون متوافق مع متطلبات المرحلة الثانية لهيئة الزكاة والضريبة والجمارك مع طباعة حرارية ESC/POS."
     }
   ]);
@@ -103,19 +111,58 @@ export const MostaqlScoutMonitor: React.FC = () => {
   }, [isRunning]);
 
   const handleManualScan = () => {
+    const mobilePool: Array<{ title: string; preset: string; budget: string; platform: string; keywords: string[]; desc: string }> = [
+      {
+        title: "مطلوب تطبيق عقارات ومزادات تفاعلية مع حجز بالتقويم والدفع",
+        preset: "real_estate",
+        budget: "$2,000 - $4,000 (7,500 - 15,000 ر.س)",
+        platform: "Cross-Platform Mobile (Android & iOS)",
+        keywords: ["تطبيق", "عقارات", "مزادات", "أندرويد", "آيفون"],
+        desc: "تطبيق متكامل لحجز ومعاينة العقارات مع محرك بحث جغرافي وتوثيق الدخول بالبصمة البيومترية ومطابقة مسح LiDAR 360."
+      },
+      {
+        title: "تطبيق مواقف ذكية وبوابات ANPR لقراءة لوحات السيارات",
+        preset: "smart_parking",
+        budget: "$2,500 - $5,000 (9,375 - 18,750 ر.س)",
+        platform: "Android Native (Jetpack Compose)",
+        keywords: ["تطبيق", "مواقف", "فاليه", "لوحات سيارات", "android"],
+        desc: "مطلوب تطبيق أندرويد لحجز مواقف السيارات مسبقاً وتوجيه السائق ومزامنة الكاميرات الذكية لقراءة اللوحات والبوابات الآلية."
+      },
+      {
+        title: "تطبيق عيادة بيطرية ورعاية الحيوانات الأليفة مع سجلات تطعيم",
+        preset: "pet_care",
+        budget: "$1,200 - $2,800 (4,500 - 10,500 ر.س)",
+        platform: "Kotlin Multiplatform (KMP)",
+        keywords: ["تطبيق", "بيطري", "حيوانات أليفة", "تطعيمات", "kmp"],
+        desc: "نظام تطبيقي يربط العيادات البيطرية مع ملاك الحيوانات الأليفة ويوثق الرقاقات الإلكترونية ومواعيد التطعيم والاستشارات الفورية."
+      },
+      {
+        title: "تطبيق غسيل ملابس ذكي مع تتبع واستلام وتوصيل للأثواب",
+        preset: "smart_laundry",
+        budget: "$1,500 - $3,200 (5,625 - 12,000 ر.س)",
+        platform: "Flutter Multi-Platform",
+        keywords: ["تطبيق", "مغسلة", "توصيل", "ملابس", "flutter"],
+        desc: "تطبيق لطلب خدمات الغسيل الجاف والكي وتتبع مراحل الطلب مع خريطة المندوب المباشرة وبوابات دفع مدى وApple Pay."
+      }
+    ];
+
+    const pick = mobilePool[Math.floor(Math.random() * mobilePool.length)];
     const newAlert: ScoutAlert = {
       id: String(Math.floor(1275000 + Math.random() * 4000)),
-      title: "مطلوب تطبيق عقارات ومزادات تفاعلية مع حجز بالتقويم والدفع",
-      preset: "services",
-      budget: "$2,000 - $4,000",
+      title: pick.title,
+      preset: pick.preset,
+      budget: pick.budget,
       detectedAt: "الآن",
-      matchedKeywords: ["عقارات", "حجز", "دفع إلكتروني", "خرائط"],
+      matchedKeywords: pick.keywords,
       alertSent: true,
-      rawDesc: "تطبيق متكامل لحجز ومعاينة العقارات مع محرك بحث جغرافي وتوثيق الدخول بالبصمة البيومترية."
+      platform: pick.platform,
+      rawDesc: pick.desc
     };
+
     setAlerts([newAlert, ...alerts]);
     setHourlyAlertsCount((prev) => Math.min(prev + 1, 5));
     setNextPollCountdown(pollIntervalSec);
+    setRejectedNonAppsCount((prev) => prev + 3);
 
     // Notify backend
     fetch('/api/agent/scout-alert', {
@@ -131,6 +178,16 @@ export const MostaqlScoutMonitor: React.FC = () => {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const filteredAlerts = alerts.filter((a) => {
+    if (!strictAppsOnly) return true;
+    if (selectedPlatformFilter === 'all') return true;
+    if (selectedPlatformFilter === 'android') return a.platform?.includes('Android');
+    if (selectedPlatformFilter === 'ios') return a.platform?.includes('iOS');
+    if (selectedPlatformFilter === 'kmp') return a.platform?.includes('KMP') || a.platform?.includes('Kotlin');
+    if (selectedPlatformFilter === 'flutter') return a.platform?.includes('Flutter');
+    return true;
+  });
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-6 space-y-6">
       {/* Intro Header */}
@@ -138,12 +195,15 @@ export const MostaqlScoutMonitor: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <Radar className="w-5 h-5 text-emerald-400 animate-spin-slow" />
-            <h2 className="text-sm font-semibold text-slate-100">
-              Mostaql Automated Scout Daemon (Stealth & Smart Cooldown)
+            <h2 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+              <span>Mostaql Automated Scout Daemon (Strict Mobile Apps Gatekeeper)</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800/60">
+                Mobile Apps Only
+              </span>
             </h2>
           </div>
           <p className="text-xs text-slate-400 mt-1">
-            Daemon from monitor.py: Human-like randomized polling (20s–120s), max 5 alerts/hour rate-limiter with 2-hour cooldown, and automatic Gemini proposal dispatch.
+            يقوم المتصيد بمراقبة قسم التطوير في مستقل وتصفية تطبيقات الجوال حصراً (أندرويد، iOS، فلاتر، KMP) مع حجب وتجاهل المواقع والشعارات وإدخال البيانات.
           </p>
         </div>
 
@@ -158,7 +218,7 @@ export const MostaqlScoutMonitor: React.FC = () => {
             }`}
           >
             {isRunning ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-            <span>{isRunning ? 'Pause Daemon' : 'Resume Daemon'}</span>
+            <span>{isRunning ? 'إيقاف مؤقت' : 'استئناف الرصد'}</span>
           </button>
 
           <button
@@ -166,8 +226,77 @@ export const MostaqlScoutMonitor: React.FC = () => {
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-md shadow-blue-600/20 active:scale-95 transition-all"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span>Scan Mostaql Now</span>
+            <span>فحص مباشر الآن (Scan Mobile)</span>
           </button>
+        </div>
+      </div>
+
+      {/* Target Category URL & Filter Gatekeeper Bar */}
+      <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div className="flex-1 flex items-center gap-2">
+            <span className="text-xs font-bold text-slate-300 shrink-0">رابط الفئة المستهدفة:</span>
+            <input
+              type="text"
+              value={targetCategoryUrl}
+              onChange={(e) => setTargetCategoryUrl(e.target.value)}
+              className="flex-1 bg-slate-950 border border-slate-700 text-emerald-400 text-xs rounded-lg px-3 py-1.5 font-mono focus:outline-none focus:border-emerald-500"
+            />
+          </div>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <label className="flex items-center gap-2 text-xs font-semibold text-slate-200 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={strictAppsOnly}
+                onChange={(e) => setStrictAppsOnly(e.target.checked)}
+                className="w-4 h-4 rounded bg-slate-950 border-slate-700 text-emerald-600 focus:ring-0 cursor-pointer"
+              />
+              <span className="text-emerald-300">تصفية تطبيقات الجوال حصراً (Apps Only)</span>
+            </label>
+
+            <a
+              href={targetCategoryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+              title="فتح الرابط في مستقل"
+            >
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+
+        {/* Platform Filter Pills & Rejection Stats */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-800/80">
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+            <span className="text-[10px] font-bold text-slate-400 mr-1">بيئة التشغيل:</span>
+            {[
+              { id: 'all', label: 'كافة التطبيقات' },
+              { id: 'android', label: 'Android Native' },
+              { id: 'ios', label: 'iOS SwiftUI' },
+              { id: 'kmp', label: 'Kotlin Multiplatform' },
+              { id: 'flutter', label: 'Flutter' }
+            ].map((p) => (
+              <button
+                key={p.id}
+                onClick={() => setSelectedPlatformFilter(p.id)}
+                className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all ${
+                  selectedPlatformFilter === p.id
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800'
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Rejection Counter */}
+          <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
+            <AlertTriangle className="w-3 h-3 text-amber-400" />
+            <span>تم استبعاد {rejectedNonAppsCount} مشروعاً غير متعلق بالتطبيقات (مواقع، شعارات، إدخال بيانات)</span>
+          </div>
         </div>
       </div>
 
@@ -236,36 +365,41 @@ export const MostaqlScoutMonitor: React.FC = () => {
           <div className="flex items-center gap-2">
             <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
             <span className="text-xs font-semibold text-slate-200">
-              Scouted Mostaql Opportunities ({alerts.length} Jobs Detected)
+              فرص تطبيقات الجوال المعتمدة ({filteredAlerts.length} تطبيق مطابق)
             </span>
           </div>
 
-          <span className="text-[11px] font-mono text-slate-400">
-            Auto-Classifier: Active
+          <span className="text-[11px] font-mono text-emerald-400">
+            بوابة فحص التطبيقات: نشطة 100%
           </span>
         </div>
 
         <div className="divide-y divide-slate-800/70">
-          {alerts.map((alert) => (
+          {filteredAlerts.map((alert) => (
             <div
               key={alert.id}
               className="p-5 hover:bg-slate-950/40 transition-colors space-y-3 font-sans"
               style={{ fontFamily: "'Cairo', 'Plus Jakarta Sans', sans-serif" }}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div className="flex items-center gap-2.5">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="text-xs font-mono px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800/40">
                     #{alert.id}
                   </span>
                   <span className="text-xs font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-300">
                     {alert.preset}
                   </span>
+                  {alert.platform && (
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/50">
+                      {alert.platform}
+                    </span>
+                  )}
                   <h3 className="text-sm font-bold text-slate-100">
                     {alert.title}
                   </h3>
                 </div>
 
-                <div className="flex items-center gap-2 text-xs font-mono">
+                <div className="flex items-center gap-2 text-xs font-mono shrink-0">
                   <span className="text-emerald-400 font-semibold">{alert.budget}</span>
                   <span className="text-slate-500">·</span>
                   <span className="text-slate-400">{alert.detectedAt}</span>

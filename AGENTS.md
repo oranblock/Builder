@@ -20,8 +20,8 @@ python3 scripts_archive/factory_engine.py <PROJECT_ID> auto "<ARABIC_BRIEF>"
 # 4. Run Forensic Governance Board Audit on all applications
 python3 scripts_archive/board_owner_audit.py --all --no-telegram
 
-# 5. Scout freelance leads & auto-synthesize non-colliding prototypes
-python3 scripts_archive/monitor.py --simulate --auto-synthesize --once
+# 5. Scout freelance mobile app leads (strictly filtered) & auto-synthesize
+python3 scripts_archive/monitor.py --url "https://mostaql.com/projects/development" --auto-synthesize --once
 
 # 6. Check API connectivity & run internal validation tests
 python3 scripts_archive/agent_client.py

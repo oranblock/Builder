@@ -37,10 +37,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   if (!isOpen) return null;
 
   const items = [
+    { title: 'Design Diversity & Anti-Duplicate Formula', category: 'Novelty', tabId: 'diversity', icon: Sparkles, desc: 'Explicit mathematical formula to prevent AI agents from generating duplicate designs' },
+    { title: 'Mobile Preview Shell (Master Shell)', category: 'Simulator', tabId: 'simulator', icon: Smartphone, desc: 'Interactive iPhone/Pixel frame with 2KB JSON specs & RTL Arabic' },
+    { title: 'Factory Control Room (SQLite Vault)', category: 'Factory', tabId: 'factory-room', icon: Cpu, desc: 'factory_engine.py: Zero-emoji guard, Pixel 6 CI harness & ephemeral sandbox' },
     { title: 'Board Governance & Owner Audit', category: 'Governance', tabId: 'board-audit', icon: Building, desc: 'board_owner_audit.py: 20-project cohorts, Headmaster grading & board directives' },
     { title: 'Mostaql Scout Daemon & Monitor', category: 'Scout', tabId: 'scout-daemon', icon: Radar, desc: 'monitor.py: Stealth randomized polling, smart rate limiter & Gemini AI proposals' },
-    { title: 'Factory Control Room (SQLite Vault)', category: 'Factory', tabId: 'factory-room', icon: Cpu, desc: 'factory_engine.py: Zero-emoji guard, Pixel 6 CI harness & ephemeral sandbox' },
-    { title: 'Mobile Preview Shell (Master Shell)', category: 'Simulator', tabId: 'simulator', icon: Smartphone, desc: 'Interactive iPhone/Pixel frame with 2KB JSON specs & RTL Arabic' },
     { title: 'Blueprint Generator', category: 'Tool', tabId: 'generator', icon: Layers, desc: 'Customize and export KMP/Android/iOS/Web repository bundles' },
     { title: 'Architecture Composer', category: 'Composer', tabId: 'composer', icon: Layers, desc: 'Organize feature modules and generate AppModule.kt & NavHost' },
     { title: 'API Tester & Acquirer', category: 'API', tabId: 'api-tester', icon: Send, desc: 'Test live endpoints and acquire telemetry with Ktor/React code' },
@@ -71,7 +72,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           <input
             type="text"
             autoFocus
-            placeholder="Search commands, board audit, scout daemon, or rules..."
+            placeholder="Search commands, diversity formula, preview shell, or rules..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="flex-1 bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none"

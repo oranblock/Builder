@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Header } from './components/layout/Header';
 import { NavigationTabs } from './components/layout/NavigationTabs';
 import { CommandPalette } from './components/layout/CommandPalette';
+import { DesignDiversityEngine } from './components/diversity/DesignDiversityEngine';
 import { UniversalMobileShell } from './components/simulator/UniversalMobileShell';
 import { FactoryFloorRoom } from './components/factory/FactoryFloorRoom';
 import { BoardOwnerAuditView } from './components/governance/BoardOwnerAuditView';
@@ -25,7 +26,7 @@ import { downloadProjectZip } from './lib/zipExport';
 import { Cpu, CheckCircle2 } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('simulator');
+  const [activeTab, setActiveTab] = useState<string>('diversity');
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -94,6 +95,7 @@ export default function App() {
 
       {/* Main View Area */}
       <main className="flex-1">
+        {activeTab === 'diversity' && <DesignDiversityEngine />}
         {activeTab === 'simulator' && <UniversalMobileShell />}
         {activeTab === 'factory-room' && <FactoryFloorRoom />}
         {activeTab === 'board-audit' && <BoardOwnerAuditView />}
@@ -121,10 +123,10 @@ export default function App() {
           <div className="flex items-center gap-2">
             <Cpu className="w-4 h-4 text-blue-500" />
             <span className="font-medium text-slate-400">
-              Autonomous Ephemeral Software Factory & Board Governance
+              Autonomous Ephemeral Software Factory & Design Diversity Engine
             </span>
             <span aria-hidden="true">·</span>
-            <span>Board Owner Audit</span>
+            <span>Explicit Anti-Duplication API</span>
             <span aria-hidden="true">·</span>
             <span>Sensei Zero-Emoji Invariant</span>
           </div>
@@ -133,6 +135,8 @@ export default function App() {
             <span>Kotlin 2.x</span>
             <span>·</span>
             <span>Swift 6</span>
+            <span>·</span>
+            <span>Express API</span>
             <span>·</span>
             <span>React 19</span>
             <span>·</span>

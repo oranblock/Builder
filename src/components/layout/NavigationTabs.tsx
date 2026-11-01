@@ -5,6 +5,7 @@ import {
   Cpu,
   Building,
   Radar,
+  Sparkles,
   Send,
   Settings2,
   Box,
@@ -14,7 +15,6 @@ import {
   ShieldCheck,
   BookOpen,
   ShieldAlert,
-  Sparkles,
   FileCode2,
   BookMarked,
 } from 'lucide-react';
@@ -29,6 +29,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
   onTabChange,
 }) => {
   const tabs = [
+    { id: 'diversity', label: 'Design Diversity & Anti-Duplicate Formula', icon: Sparkles },
     { id: 'simulator', label: 'Mobile Preview Shell', icon: Smartphone },
     { id: 'factory-room', label: 'Factory Control Room', icon: Cpu },
     { id: 'board-audit', label: 'Board Governance & Audit', icon: Building },
@@ -60,7 +61,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
               onClick={() => onTabChange(tab.id)}
               className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                 isActive
-                  ? 'bg-blue-600/15 text-blue-400 border border-blue-500/30'
+                  ? 'bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 border border-transparent'
               }`}
             >

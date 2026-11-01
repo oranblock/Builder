@@ -68,6 +68,22 @@ export const MostaqlScoutMonitor: React.FC = () => {
     }
   ]);
 
+  // Fetch live scout alerts from backend
+  useEffect(() => {
+    fetch('/api/agent/scout-alerts')
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setAlerts((prev) => {
+            const existingIds = new Set(prev.map((a) => a.id));
+            const fresh = data.filter((d: any) => !existingIds.has(d.id));
+            return [...fresh, ...prev];
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   // Countdown timer simulation
   useEffect(() => {
     if (!isRunning) return;
@@ -88,7 +104,7 @@ export const MostaqlScoutMonitor: React.FC = () => {
 
   const handleManualScan = () => {
     const newAlert: ScoutAlert = {
-      id: "1275089",
+      id: String(Math.floor(1275000 + Math.random() * 4000)),
       title: "مطلوب تطبيق عقارات ومزادات تفاعلية مع حجز بالتقويم والدفع",
       preset: "services",
       budget: "$2,000 - $4,000",
@@ -100,6 +116,13 @@ export const MostaqlScoutMonitor: React.FC = () => {
     setAlerts([newAlert, ...alerts]);
     setHourlyAlertsCount((prev) => Math.min(prev + 1, 5));
     setNextPollCountdown(pollIntervalSec);
+
+    // Notify backend
+    fetch('/api/agent/scout-alert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newAlert)
+    }).catch(() => {});
   };
 
   const handleCopyAlert = (id: string, text: string) => {

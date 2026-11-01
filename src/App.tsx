@@ -24,9 +24,11 @@ import { GeneratorOptions } from './types';
 import { templateFiles } from './data/templatesData';
 import { downloadProjectZip } from './lib/zipExport';
 import { Cpu, CheckCircle2 } from 'lucide-react';
+import { SmartAgentControlCenter } from './components/agent/SmartAgentControlCenter';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('diversity');
+  const [activeTab, setActiveTab] = useState<string>('smart-agent');
+  const [simulatedProjectId, setSimulatedProjectId] = useState<string | undefined>(undefined);
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -95,8 +97,16 @@ export default function App() {
 
       {/* Main View Area */}
       <main className="flex-1">
+        {activeTab === 'smart-agent' && (
+          <SmartAgentControlCenter
+            onLaunchSimulator={(pid) => {
+              setSimulatedProjectId(pid);
+              setActiveTab('simulator');
+            }}
+          />
+        )}
         {activeTab === 'diversity' && <DesignDiversityEngine />}
-        {activeTab === 'simulator' && <UniversalMobileShell />}
+        {activeTab === 'simulator' && <UniversalMobileShell initialProjectId={simulatedProjectId} />}
         {activeTab === 'factory-room' && <FactoryFloorRoom />}
         {activeTab === 'board-audit' && <BoardOwnerAuditView />}
         {activeTab === 'scout-daemon' && <MostaqlScoutMonitor />}

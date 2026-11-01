@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Smartphone,
   CheckCircle2,
@@ -41,8 +41,15 @@ import {
 import { UniversalAppSpec, realFactoryProjects, LayoutType } from '../../data/factoryProjectsData';
 import { downloadSingleFile } from '../../lib/zipExport';
 
-export const UniversalMobileShell: React.FC = () => {
-  const [selectedProjectId, setSelectedProjectId] = useState<string>('1265226');
+export interface UniversalMobileShellProps {
+  initialProjectId?: string;
+}
+
+export const UniversalMobileShell: React.FC<UniversalMobileShellProps> = ({
+  initialProjectId
+}) => {
+  const [projectsList, setProjectsList] = useState<UniversalAppSpec[]>(realFactoryProjects);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>(initialProjectId || '1265226');
   const [activeTab, setActiveTab] = useState<string>('home');
   const [deviceModel, setDeviceModel] = useState<'iphone' | 'pixel'>('iphone');
   const [isRTL, setIsRTL] = useState<boolean>(true);
@@ -66,11 +73,28 @@ export const UniversalMobileShell: React.FC = () => {
 
   // In-memory editable JSON spec
   const initialProject =
-    realFactoryProjects.find((p) => p.project_id === selectedProjectId) || realFactoryProjects[0];
+    projectsList.find((p) => p.project_id === selectedProjectId) || projectsList[0] || realFactoryProjects[0];
   const [customSpecText, setCustomSpecText] = useState<string>(
     JSON.stringify(initialProject, null, 2)
   );
   const [specError, setSpecError] = useState<string | null>(null);
+
+  // Fetch live projects from Web App REST API
+  useEffect(() => {
+    fetch('/api/projects')
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProjectsList(data);
+          const targetId = initialProjectId || selectedProjectId;
+          const match = data.find((p) => p.project_id === targetId) || data[0];
+          setSelectedProjectId(match.project_id);
+          setCustomSpecText(JSON.stringify(match, null, 2));
+        }
+      })
+      .catch((err) => console.warn('Could not fetch /api/projects', err));
+  }, [initialProjectId]);
+
 
   // Parse current active spec
   let activeSpec: UniversalAppSpec = initialProject;
@@ -1136,7 +1160,7 @@ export const UniversalMobileShell: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          {realFactoryProjects.map((p) => {
+          {projectsList.map((p) => {
             const isSelected = p.project_id === selectedProjectId;
             return (
               <button

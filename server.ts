@@ -41,9 +41,11 @@ async function startServer() {
   // Verifies that an agent's proposed spec does not collide with existing vault templates
   app.post('/api/audit-novelty', (req, res) => {
     const proposed = req.body;
-    if (!proposed || !proposed.project_id) {
+    const projectId = proposed?.project_id || proposed?.projectId;
+    if (!proposed || !projectId) {
       return res.status(400).json({ error: 'Missing project_id in proposal' });
     }
+    proposed.project_id = projectId;
 
     // Check against existing projects
     const collisions = realFactoryProjects.filter(

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Download, Layers, ShieldCheck, Cpu } from 'lucide-react';
+import { Download, Layers, ShieldCheck, Cpu, Search, Command } from 'lucide-react';
 import { GeneratorOptions } from '../../types';
 
 interface HeaderProps {
@@ -8,6 +8,7 @@ interface HeaderProps {
   isExporting: boolean;
   activeTab: string;
   onTabChange: (tab: string) => void;
+  onOpenCommandPalette: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   isExporting,
   activeTab,
   onTabChange,
+  onOpenCommandPalette,
 }) => {
   return (
     <header className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md px-6 py-3.5">
@@ -35,13 +37,26 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              Zero-Emoji · Animated Vectors · TOML Catalogs · Filament & Shader Rules
+              Hardware Sensors · Filament 3D · Zero-Emoji · Rosetta Stone · TOML Catalogs
             </p>
           </div>
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-3">
+        {/* Quick Search & Action Controls */}
+        <div className="flex items-center gap-2.5">
+          <button
+            id="cmd-palette-btn"
+            onClick={onOpenCommandPalette}
+            className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition-colors"
+            title="Search commands, sensors, or rules (⌘K)"
+          >
+            <Search className="w-3.5 h-3.5 text-slate-400" />
+            <span className="text-slate-400">Quick Search</span>
+            <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
+              ⌘K
+            </kbd>
+          </button>
+
           <button
             onClick={onExportBundle}
             disabled={isExporting}
@@ -49,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({
             title="Download full project blueprint as ZIP with all configured files"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>{isExporting ? 'Packaging ZIP...' : 'Save Repository Bundle (.zip)'}</span>
+            <span>{isExporting ? 'Packaging ZIP...' : 'Save Bundle (.zip)'}</span>
           </button>
         </div>
       </div>

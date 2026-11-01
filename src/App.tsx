@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import { Header } from './components/layout/Header';
 import { NavigationTabs } from './components/layout/NavigationTabs';
+import { CommandPalette } from './components/layout/CommandPalette';
+import { UniversalMobileShell } from './components/simulator/UniversalMobileShell';
+import { FactoryFloorRoom } from './components/factory/FactoryFloorRoom';
+import { BoardOwnerAuditView } from './components/governance/BoardOwnerAuditView';
+import { MostaqlScoutMonitor } from './components/scout/MostaqlScoutMonitor';
 import { BlueprintGenerator } from './components/generator/BlueprintGenerator';
+import { ArchitectureComposer } from './components/composer/ArchitectureComposer';
+import { ApiAcquireTester } from './components/api/ApiAcquireTester';
+import { CodeRosettaStone } from './components/converter/CodeRosettaStone';
 import { HardwareSensorStudio } from './components/sensors/HardwareSensorStudio';
 import { ModuleGraphVisualizer } from './components/architecture/ModuleGraphVisualizer';
 import { FilamentVisualizer } from './components/filament/FilamentVisualizer';
@@ -17,8 +25,9 @@ import { downloadProjectZip } from './lib/zipExport';
 import { Cpu, CheckCircle2 } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('generator');
+  const [activeTab, setActiveTab] = useState<string>('simulator');
   const [isExporting, setIsExporting] = useState<boolean>(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const [options, setOptions] = useState<GeneratorOptions>({
@@ -55,6 +64,13 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+      {/* Global Command Palette (⌘K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onNavigateTab={(tab) => setActiveTab(tab)}
+      />
+
       {/* Toast Alert */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-lg bg-blue-600 text-white text-xs font-medium shadow-xl shadow-blue-600/30 animate-in fade-in slide-in-from-bottom-2 duration-200">
@@ -70,6 +86,7 @@ export default function App() {
         isExporting={isExporting}
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
       />
 
       {/* Sub-Navigation Tabs */}
@@ -77,9 +94,16 @@ export default function App() {
 
       {/* Main View Area */}
       <main className="flex-1">
+        {activeTab === 'simulator' && <UniversalMobileShell />}
+        {activeTab === 'factory-room' && <FactoryFloorRoom />}
+        {activeTab === 'board-audit' && <BoardOwnerAuditView />}
+        {activeTab === 'scout-daemon' && <MostaqlScoutMonitor />}
         {activeTab === 'generator' && (
           <BlueprintGenerator options={options} onOptionsChange={setOptions} />
         )}
+        {activeTab === 'composer' && <ArchitectureComposer />}
+        {activeTab === 'api-tester' && <ApiAcquireTester />}
+        {activeTab === 'rosetta' && <CodeRosettaStone />}
         {activeTab === 'sensors' && <HardwareSensorStudio />}
         {activeTab === 'module-graph' && <ModuleGraphVisualizer />}
         {activeTab === 'filament' && <FilamentVisualizer />}
@@ -97,12 +121,12 @@ export default function App() {
           <div className="flex items-center gap-2">
             <Cpu className="w-4 h-4 text-blue-500" />
             <span className="font-medium text-slate-400">
-              Multiplatform Standards Engine
+              Autonomous Ephemeral Software Factory & Board Governance
             </span>
             <span aria-hidden="true">·</span>
-            <span>Hardware, Battery, BLE Scales & Sensors</span>
+            <span>Board Owner Audit</span>
             <span aria-hidden="true">·</span>
-            <span>Zero-Emoji Architecture</span>
+            <span>Sensei Zero-Emoji Invariant</span>
           </div>
 
           <div className="flex items-center gap-4 text-slate-400">

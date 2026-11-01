@@ -1,8 +1,15 @@
 import React from 'react';
 import {
   Layers,
+  Smartphone,
+  Cpu,
+  Building,
+  Radar,
+  Send,
+  Settings2,
   Box,
   Radio,
+  ArrowRightLeft,
   GitBranch,
   ShieldCheck,
   BookOpen,
@@ -22,7 +29,14 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
   onTabChange,
 }) => {
   const tabs = [
+    { id: 'simulator', label: 'Mobile Preview Shell', icon: Smartphone },
+    { id: 'factory-room', label: 'Factory Control Room', icon: Cpu },
+    { id: 'board-audit', label: 'Board Governance & Audit', icon: Building },
+    { id: 'scout-daemon', label: 'Mostaql Scout Daemon', icon: Radar },
     { id: 'generator', label: 'Blueprint Generator', icon: Layers },
+    { id: 'composer', label: 'Architecture Composer', icon: Settings2 },
+    { id: 'api-tester', label: 'API Tester & Acquirer', icon: Send },
+    { id: 'rosetta', label: 'Code Rosetta Stone', icon: ArrowRightLeft },
     { id: 'sensors', label: 'Hardware & Sensor APIs', icon: Radio },
     { id: 'module-graph', label: 'KMP Architecture Graph', icon: GitBranch },
     { id: 'filament', label: 'Filament 3D Engine', icon: Box },

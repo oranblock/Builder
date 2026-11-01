@@ -1825,10 +1825,16 @@ export const UniversalMobileShell: React.FC<UniversalMobileShellProps> = ({
         return renderSmartEducationLayout();
       case 'logistics_warehouse':
         return renderLogisticsWarehouseLayout();
+      case 'smart_parking':
+      case 'event_ticketing':
+      case 'smart_laundry':
+      case 'pet_care':
+      case 'legal_consulting':
+      case 'industrial_iot':
       case 'custom':
         return renderCustomLayout();
       default:
-        return renderServicesLayout();
+        return renderCustomLayout();
     }
   };
 

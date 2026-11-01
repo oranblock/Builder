@@ -17,9 +17,9 @@ This skill empowers autonomous agents to monitor freelance client requests (e.g.
 
 ---
 
-## 2. Supported Archetypes & Hardware Sensor Matrix (14 Commercial Domains)
+## 2. Supported Archetypes & Hardware Sensor Matrix (20 Commercial Domains + Custom)
 
-Agents must select from the following 14 commercial archetypes or generate a custom preset:
+Agents must select from the following 20 commercial archetypes or generate a custom preset:
 
 | Archetype Code | Industry Domain | Bound Hardware Peripheral | Driver Protocol | Target Commercial Value |
 | :--- | :--- | :--- | :--- | :--- |
@@ -37,7 +37,13 @@ Agents must select from the following 14 commercial archetypes or generate a cus
 | `auction_live` | Live Real-time Auctions | BLE Hardware Bidding Paddle + Opus Audio | BLE GATT + Sub-100ms WebRTC | 28,000 - 55,000 SAR |
 | `smart_education` | Interactive EdTech Academy | Smart Stylus Digitizer (Pressure 4096 levels) | Android Stylus MotionEvent / BLE | 16,000 - 30,000 SAR |
 | `logistics_warehouse` | Logistics WMS & Inventory | 2D Laser Barcode Scanner + Pallet Scale | Zebra/Honeywell SDK + BLE Scale | 20,000 - 38,000 SAR |
-| `custom` | Bespoke Custom Preset | Custom Specified Peripheral (Procedural) | Dynamic Driver Bridge | 15,000 - 40,000 SAR |
+| `smart_parking` | Smart Parking & Valet Gates | Ultrasonic Ground Sensor + ANPR LPR Camera | RTSP Video + Rest/MQTT Event | 22,000 - 36,000 SAR |
+| `event_ticketing` | Event Passes & Conferences | 2D Turnstile Fast Scanner + UHF Wristband | NFC ISO 15693 / UHF EPC Gen2 | 16,000 - 28,000 SAR |
+| `smart_laundry` | Smart Laundry & Garments | Heat-Resistant UHF RFID Garment Chip | Impinj RFID SDK / BLE Bridge | 14,000 - 24,000 SAR |
+| `pet_care` | Veterinary Clinics & Pets | ISO 134.2 kHz Microchip Reader + BLE Collar | FDX-B / HDX RFID Reader | 12,000 - 22,000 SAR |
+| `legal_consulting` | Legal Practice & Najiz | Cryptographic HSM Security Token (FIPS 140-2) | PKCS#11 / USB-C CCID Token | 24,000 - 42,000 SAR |
+| `industrial_iot` | Predictive Vibration IoT | 3-Axis Vibration Sensor + Modbus RS485 | Modbus RTU / MQTT Gateway | 28,000 - 50,000 SAR |
+| `custom` | Bespoke Custom Preset | Custom Specified Peripheral (Procedural) | Dynamic Driver Bridge | 15,000 - 45,000 SAR |
 
 ---
 
@@ -76,23 +82,32 @@ Agents must use the following standard commands to trigger synthesis, auditing, 
 
 ### A. Autonomous App Synthesis (`factory_engine.py`)
 Synthesize a complete native project specification, Jetpack Compose source tree, hardware driver, and Arabic proposal:
+### A. Smart Preset Selector (`smart_selector.py`)
+Autonomous zero-human selection of archetype, hardware, and non-colliding design:
 ```bash
+python3 scripts_archive/smart_selector.py "<ARABIC_BRIEF>" --auto-synthesize
+```
+
+### B. Core App Synthesizer (`factory_engine.py`)
+Synthesize a brand new application from scratch with automatic or explicit archetype:
+```bash
+python3 scripts_archive/factory_engine.py <PROJECT_ID> auto "<ARABIC_BRIEF>"
 python3 scripts_archive/factory_engine.py <PROJECT_ID> <ARCHETYPE> "<ARABIC_BRIEF>"
 ```
 
-### B. Forensic Board Audit (`board_owner_audit.py`)
+### C. Forensic Board Audit (`board_owner_audit.py`)
 Run a 6-pillar compliance audit on all generated projects or a single target:
 ```bash
 python3 scripts_archive/board_owner_audit.py --all --no-telegram
 ```
 
-### C. Freelance Marketplace Scout (`monitor.py`)
+### D. Freelance Marketplace Scout (`monitor.py`)
 Scrape and parse active high-budget mobile development jobs from Mostaql:
 ```bash
 python3 scripts_archive/monitor.py --simulate --auto-synthesize --once
 ```
 
-### D. Agent Client Library (`agent_client.py`)
+### E. Agent Client Library (`agent_client.py`)
 Python helper library for scripting and programmatic telemetry:
 ```bash
 python3 scripts_archive/agent_client.py
@@ -100,9 +115,18 @@ python3 scripts_archive/agent_client.py
 
 ---
 
-## 5. Web Application Telemetry API Bridge
+## 5. Web Application Telemetry API Bridge & Port Isolation
 
-All agents are connected in real-time to the Vite/Express web dashboard running on port 3000:
-- `POST http://localhost:3000/api/agent/telemetry`
-- `POST http://localhost:3000/api/agent/scout-alert`
-- `GET http://localhost:3000/api/projects`
+To avoid collisions with user host ports (Tachyon: 3000, File Uploader: 5000, SearXNG: 8888, OmniRoute: 20128/20131/20132):
+- Set `FACTORY_PORT=3030` and `FACTORY_API_BASE_URL="http://localhost:3030"`
+- All scripts dynamically resolve the configured port.
+
+API Endpoints:
+- `POST /api/agent/smart-select` — Autonomous zero-human brief analysis & archetype selector
+- `GET /api/presets` — List of all 20+ archetype presets
+- `GET /api/design-formula` — Mathematical WCAG 2.1 palette generation
+- `POST /api/audit-novelty` — Novelty gatekeeper & collision check
+- `POST /api/agent/telemetry` — Project telemetry streaming
+- `POST /api/agent/scout-alert` — Scout opportunity broadcast
+- `GET /api/projects` — Active project registry
+

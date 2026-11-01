@@ -13,6 +13,12 @@ export type LayoutType =
   | 'auction_live'
   | 'smart_education'
   | 'logistics_warehouse'
+  | 'smart_parking'
+  | 'event_ticketing'
+  | 'smart_laundry'
+  | 'pet_care'
+  | 'legal_consulting'
+  | 'industrial_iot'
   | 'custom';
 
 export interface UniversalAppSpec {

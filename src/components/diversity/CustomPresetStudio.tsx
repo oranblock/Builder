@@ -29,7 +29,10 @@ import {
   HeartPulse,
   Sprout,
   Activity,
-  Code2
+  Code2,
+  Ticket,
+  Shirt,
+  FileText
 } from 'lucide-react';
 import { UniversalAppSpec, realFactoryProjects, LayoutType } from '../../data/factoryProjectsData';
 import { downloadSingleFile } from '../../lib/zipExport';
@@ -159,6 +162,54 @@ const ALL_ARCHETYPES_INFO: {
     hardware: 'قارئ باركود 2D ليزري + ميزان صناعي بلوتوث',
     defaultColor: '#b45309',
     icon: Package,
+  },
+  {
+    type: 'smart_parking',
+    title: 'مواقف ذكية وبوابات ANPR',
+    domain: 'إدارة مواقف وفاليه وبوابات ذكية',
+    hardware: 'حساس إشغال أرضي موجات فوق صوتية + كاميرا ANPR LPR',
+    defaultColor: '#1d4ed8',
+    icon: Car,
+  },
+  {
+    type: 'event_ticketing',
+    title: 'فعاليات ومؤتمرات وتذاكر',
+    domain: 'تذاكر رقمية وحفلات وإدارة حشود',
+    hardware: 'قارئ بوابات سريع 2D QR + سوار معصم UHF RFID',
+    defaultColor: '#4338ca',
+    icon: Ticket,
+  },
+  {
+    type: 'smart_laundry',
+    title: 'مغاسل ذكية وعناية بالملابس',
+    domain: 'غسيل وكوي وأثواب وتنظيف جاف فوري',
+    hardware: 'شريحة تتبع ملابس RFID مقاومة للحرارة',
+    defaultColor: '#0891b2',
+    icon: Shirt,
+  },
+  {
+    type: 'pet_care',
+    title: 'عيادات بيطرية ورعاية أليفة',
+    domain: 'كشوفات بيطرية وتطعيمات وسجلات طبية',
+    hardware: 'قارئ رقاقات إلكترونية ISO 134.2 kHz + طوق BLE',
+    defaultColor: '#be185d',
+    icon: HeartPulse,
+  },
+  {
+    type: 'legal_consulting',
+    title: 'استشارات وتوثيق قانوني',
+    domain: 'عقود موثقة ومحاماة وتكامل منصة ناجز',
+    hardware: 'وحدة تشفير آمنة HSM + بصمة رقمية متقدمة',
+    defaultColor: '#374151',
+    icon: FileText,
+  },
+  {
+    type: 'industrial_iot',
+    title: 'صيانة تنبؤية وتيليمتري صناعي',
+    domain: 'مراقبة خطوط إنتاج وتوربينات ومضخات',
+    hardware: 'مستشعر اهتزاز ثلاثي المحاور + مسبار Modbus RS485',
+    defaultColor: '#b45309',
+    icon: Cpu,
   },
 ];
 

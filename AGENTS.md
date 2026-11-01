@@ -7,22 +7,46 @@ This document provides immediate, deterministic instructions for autonomous agen
 ## ⚡ Quick Command Reference
 
 ```bash
-# 1. Synthesize a brand new bespoke Android app (from brief to full code & live preview)
+# 1. Autonomous Zero-Human Selection & Synthesis (Smart Preset Selector)
+python3 scripts_archive/smart_selector.py "<ARABIC_BRIEF>" --auto-synthesize
+
+# 2. Synthesize bespoke Android app with explicit archetype or auto detection
+python3 scripts_archive/factory_engine.py <PROJECT_ID> auto "<ARABIC_BRIEF>"
 python3 scripts_archive/factory_engine.py <PROJECT_ID> <ARCHETYPE> "<ARABIC_BRIEF>"
 
-# 2. Run Forensic Governance Board Audit on all applications
+# 3. Run Forensic Governance Board Audit on all applications
 python3 scripts_archive/board_owner_audit.py --all --no-telegram
 
-# 3. Scout Mostaql freelance leads & auto-synthesize prototypes
+# 4. Scout freelance leads & auto-synthesize non-colliding prototypes
 python3 scripts_archive/monitor.py --simulate --auto-synthesize --once
 
-# 4. Check API connectivity & run internal validation tests
+# 5. Check API connectivity & run internal validation tests
 python3 scripts_archive/agent_client.py
 ```
 
 ---
 
-## 🧭 The 14 Archetypes & Their Sensor Signatures
+## 🔌 Port Configuration & Conflict Isolation
+
+To prevent conflicts in environments running Tachyon and OmniRoute:
+- **Port 3000**: Tachyon Web Server
+- **Port 5000**: File Uploader Service
+- **Port 8888**: SearXNG Search Engine
+- **Port 20128**: OmniRoute AI Gateway and Dashboard
+- **Port 20131**: OmniRoute Internal Worker
+- **Port 20132**: OmniRoute Internal Proxy
+- **Port 3030** (`FACTORY_PORT=3030`): Factory Web Dashboard & API Server
+
+When running Python agent daemons or invoking the API, export:
+```bash
+export FACTORY_PORT=3030
+export FACTORY_API_BASE_URL="http://localhost:3030"
+```
+The client SDK `agent_client.py` and `smart_selector.py` dynamically resolve this environment variable.
+
+---
+
+## 🧭 The 20 Commercial Archetypes & Their Sensor Signatures
 
 When parsing user briefs or freelance job descriptions, classify the project into one of these exact keys:
 
@@ -54,7 +78,19 @@ When parsing user briefs or freelance job descriptions, classify the project int
     - Peripheral: Smart Stylus Digitizer (4096 pressure levels) + BLE Attendance Beacon.
 14. **`logistics_warehouse`**: WMS smart inventory, bin scanning, pallet intake.
     - Peripheral: 2D Long-Range Laser Barcode Scanner + Bluetooth Industrial Pallet Scale.
-15. **`custom`**: Bespoke custom preset designed in the Custom Preset Studio.
+15. **`smart_parking`**: Smart parking lots, automated gates, valet service.
+    - Peripheral: Ultrasonic Ground Occupancy Sensor + ANPR LPR Camera.
+16. **`event_ticketing`**: Digital tickets, conference registrations, concerts.
+    - Peripheral: Fast 2D QR Turnstile Scanner + UHF RFID Wristband.
+17. **`smart_laundry`**: Smart laundromats, garment care, express dry cleaning.
+    - Peripheral: Heat-Resistant UHF RFID Garment Chip.
+18. **`pet_care`**: Veterinary clinics, pet wellness, vaccination records.
+    - Peripheral: ISO 134.2 kHz Microchip Reader + BLE Smart Collar.
+19. **`legal_consulting`**: Certified contracts, lawyer bookings, Najiz platform integration.
+    - Peripheral: Cryptographic HSM Security Token + Digital Signature.
+20. **`industrial_iot`**: Predictive maintenance, turbine and motor vibration analysis.
+    - Peripheral: 3-Axis Industrial Vibration Accelerometer + Modbus RS485.
+21. **`custom`**: Bespoke custom preset designed in the Custom Preset Studio.
     - Peripheral: Procedural / Custom Specified Sensor Driver.
 
 ---
@@ -69,8 +105,13 @@ When parsing user briefs or freelance job descriptions, classify the project int
 
 ## 🌐 Web App Integration Endpoints
 
-The web app dashboard is hosted locally on port 3000. Use `agent_client.py` or `curl`:
+Use `agent_client.py`, `smart_selector.py`, or `curl`:
 
+- **POST** `/api/agent/smart-select` — Autonomous zero-human brief analysis, optimal archetype & hardware selection.
+- **GET** `/api/presets` — Retrieves all 20+ archetype presets with their sensor configurations.
+- **GET** `/api/design-formula` — Mathematical WCAG 2.1 palette & layout generation.
+- **POST** `/api/audit-novelty` — Novelty Gatekeeper preventing visual duplicate apps.
 - **POST** `/api/agent/telemetry` — Reports project health, contrast ratios, and hardware driver bindings.
 - **POST** `/api/agent/scout-alert` — Sends new high-value lead alerts to the web dashboard.
 - **GET** `/api/projects` — Fetches all live registered projects.
+

@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || process.env.FACTORY_PORT || 3000;
 
   app.use(express.json());
 
@@ -318,6 +318,24 @@ async function startServer() {
     } else if (lowerBrief.includes('مستودع') || lowerBrief.includes('مخزون') || lowerBrief.includes('جرد') || lowerBrief.includes('طبلية') || lowerBrief.includes('باركود') || lowerBrief.includes('wms') || lowerBrief.includes('warehouse')) {
       layoutType = 'logistics_warehouse';
       chosenPreset = 'logistics_warehouse';
+    } else if (lowerBrief.includes('موقف') || lowerBrief.includes('مواقف') || lowerBrief.includes('فاليه') || lowerBrief.includes('بوابة') || lowerBrief.includes('parking') || lowerBrief.includes('valet')) {
+      layoutType = 'smart_parking';
+      chosenPreset = 'smart_parking';
+    } else if (lowerBrief.includes('فعالية') || lowerBrief.includes('فعاليات') || lowerBrief.includes('مؤتمر') || lowerBrief.includes('تذكرة') || lowerBrief.includes('تذاكر') || lowerBrief.includes('حفلة') || lowerBrief.includes('event') || lowerBrief.includes('ticket')) {
+      layoutType = 'event_ticketing';
+      chosenPreset = 'event_ticketing';
+    } else if (lowerBrief.includes('مغسلة') || lowerBrief.includes('غسيل') || lowerBrief.includes('كوي') || lowerBrief.includes('ملابس') || lowerBrief.includes('laundry') || lowerBrief.includes('dry_clean')) {
+      layoutType = 'smart_laundry';
+      chosenPreset = 'smart_laundry';
+    } else if (lowerBrief.includes('بيطري') || lowerBrief.includes('حيوانات') || lowerBrief.includes('قطط') || lowerBrief.includes('كلاب') || lowerBrief.includes('أليف') || lowerBrief.includes('pet') || lowerBrief.includes('vet')) {
+      layoutType = 'pet_care';
+      chosenPreset = 'pet_care';
+    } else if (lowerBrief.includes('محام') || lowerBrief.includes('محامي') || lowerBrief.includes('قانون') || lowerBrief.includes('استشارة قانونية') || lowerBrief.includes('عقد') || lowerBrief.includes('ناجز') || lowerBrief.includes('legal') || lowerBrief.includes('law')) {
+      layoutType = 'legal_consulting';
+      chosenPreset = 'legal_consulting';
+    } else if (lowerBrief.includes('مصنع') || lowerBrief.includes('صناعي') || lowerBrief.includes('اهتزاز') || lowerBrief.includes('معدات') || lowerBrief.includes('مضخة') || lowerBrief.includes('توربين') || lowerBrief.includes('مرافق') || lowerBrief.includes('industrial') || lowerBrief.includes('iot')) {
+      layoutType = 'industrial_iot';
+      chosenPreset = 'industrial_iot';
     }
 
     const VALID_PRESETS = [
@@ -335,6 +353,12 @@ async function startServer() {
       'auction_live',
       'smart_education',
       'logistics_warehouse',
+      'smart_parking',
+      'event_ticketing',
+      'smart_laundry',
+      'pet_care',
+      'legal_consulting',
+      'industrial_iot',
       'custom'
     ];
     if (preset && VALID_PRESETS.includes(preset)) {
@@ -567,6 +591,97 @@ async function startServer() {
           shelfLocation: 'Zone B / Rack 12'
         }
       },
+      smart_parking: {
+        app_name: `مواقف بارك الذكية #${projId.slice(-4)}`,
+        tagline: 'حجز مواقف السيارات مسبقاً مع حساسات الإشغال الأرضية والتعرف على اللوحات LPR',
+        categories: ['المواقف العادية', 'مواقف الشحن EV', 'خدمة الفاليه VIP', 'المواقف الشهرية'],
+        items: [
+          { title: 'موقف مميز قطاع A — بوابة 2', desc: 'حساس إشغال أرضي مع إضاءة خضراء توجيهية', price: '15 ر.س/ساعة', icon: 'car', badge: 'شاغر' },
+          { title: 'موقف شحن سريع للسيارات الكهربائية', desc: 'شاحن 150 كيلوواط DC متصل بنظام الفوترة', price: '35 ر.س/ساعة', icon: 'zap', badge: 'شحن فائق' },
+          { title: 'خدمة الفاليه واستلام المفتاح الذكي', desc: 'استلام السيارة عند المدخل وركنها بأمان', price: '50 ر.س', icon: 'key', badge: 'VIP' }
+        ],
+        domain_data: {
+          anprCameraStatus: 'Active OCR Plate Reader',
+          occupancySensor: 'Ultrasonic Node B-14',
+          barrierProtocol: 'Mada NFC ISO 14443-A'
+        }
+      },
+      event_ticketing: {
+        app_name: `منصة تذاكر فعاليات #${projId.slice(-4)}`,
+        tagline: 'تذاكر رقمية ديناميكية مضادة للتصوير مع فحص بوابات الدخول عبر RFID وQR',
+        categories: ['حفلات غنائية', 'مؤتمرات تقنية', 'مباريات رياضية', 'معارض دولية'],
+        items: [
+          { title: 'تذكرة كبار الشخصيات VIP Lounge', desc: 'دخول سريع عبر البوابات الذكية وضيافة متكاملة', price: '750 ر.س', icon: 'award', badge: 'VIP' },
+          { title: 'تذكرة المقاعد الذهبية — الصف الأول', desc: 'رمز QR متحرك مشفر يمنع إعادة البيع الاحتيالي', price: '450 ر.س', icon: 'tag', badge: 'تذكرة رقمية' },
+          { title: 'تصريح دخول عام للمؤتمر والمعرض', desc: 'شامل ورش العمل والشهادة الرقمية', price: '200 ر.س', icon: 'users', badge: 'متاح' }
+        ],
+        domain_data: {
+          turnstileScanner: '2D Ultra-fast QR Engine',
+          rfidWristbandProgrammer: 'UHF RFID ISO 18000-6C',
+          dynamicTotpQr: true
+        }
+      },
+      smart_laundry: {
+        app_name: `مغاسل ناصع الذكية #${projId.slice(-4)}`,
+        tagline: 'تتبع قطع الملابس بشرائح RFID المقاومة للحرارة مع استلام وتوصيل مجدول',
+        categories: ['غسيل جاف', 'كوي بالبخار', 'تعقيم وعطور', 'فساتين وأثواب'],
+        items: [
+          { title: 'باقة الأثواب السعودية الفاخرة (5 قطع)', desc: 'غسيل مخصص ومعالجة الياقات وكوي بخار معطر', price: '65 ر.س', icon: 'sparkles', badge: 'الأكثر طلباً' },
+          { title: 'تنظيف جاف للبدلات والسترات الصوفية', desc: 'مذيبات عضوية ألمانية تحافظ على ألياف النسيج', price: '45 ر.س', icon: 'package', badge: 'عناية خاصة' },
+          { title: 'غسيل وتعقيم المفارش والبطانيات', desc: 'تعقيم حراري بالأوزون لإزالة البكتيريا والغبار', price: '55 ر.س', icon: 'shield', badge: 'تعقيم طبي' }
+        ],
+        domain_data: {
+          rfidGarmentChipFreq: '13.56 MHz Heat-Resistant',
+          conveyorSorterStatus: 'Automated Carousel Slot 84',
+          pickupEtaMinutes: 20
+        }
+      },
+      pet_care: {
+        app_name: `رعاية الأليف — العيادة البيطرية #${projId.slice(-4)}`,
+        tagline: 'فحص الشريحة الإلكترونية وسجل التطعيمات الرقمي وحجز أطباء بيطريين',
+        categories: ['عيادة وطوارئ', 'تطعيمات وشرائح', 'فندقة ورعاية', 'عناية واستحمام'],
+        items: [
+          { title: 'فحص بيطري شامل مع قراءة الشريحة RFID', desc: 'فحص سريري كامل وتوثيق رقم الهوية الحيوانية', price: '120 ر.س', icon: 'activity', badge: 'فحص كامل' },
+          { title: 'باقة التطعيمات السنوية المعتمدة', desc: 'شامل دفتر التطعيم الإلكتروني والتحصينات', price: '180 ر.س', icon: 'shield', badge: 'شهادة صحية' },
+          { title: 'جلسة تنظيف وتزيين متكاملة Grooming', desc: 'قص أظافر واستحمام طبي وتجفيف بالأيونات', price: '95 ر.س', icon: 'heart', badge: 'عناية' }
+        ],
+        domain_data: {
+          rfidMicrochipScanner: 'ISO 11784/11785 134.2 kHz',
+          bleCollarTrackerStatus: 'BLE Smart Collar Synced',
+          vetDoctorName: 'د. يوسف المنصور (استشاري بيطري)'
+        }
+      },
+      legal_consulting: {
+        app_name: `وثيقة — الاستشارات القانونية المعتمدة #${projId.slice(-4)}`,
+        tagline: 'استشارات محامين مرخصين وتوثيق العقود مع الربط بمنصة ناجز والتوقيع الرقمي',
+        categories: ['الشركات والتجارة', 'العقارات والتركات', 'صياغة العقود', 'المرافعات'],
+        items: [
+          { title: 'استشارة قانونية تجارية متخصصة (45 دقيقة)', desc: 'جلسة مرئية مشفرة مع محام مرخص وخبير عقود', price: '350 ر.س', icon: 'file_text', badge: 'محام مرخص' },
+          { title: 'مراجعة وتدقيق اتفاقية شراكة وعقد تأسيس', desc: 'فحص الشروط الجزائية ومطابقتها لنظام الشركات السعودي', price: '850 ر.س', icon: 'shield', badge: 'تدقيق نظامي' },
+          { title: 'توثيق إلكتروني لعقد وساطة وإفراغ', desc: 'ربط لحظي مع بوابة التوثيق العدلي المعتمدة', price: '250 ر.س', icon: 'check', badge: 'موثق رسمياً' }
+        ],
+        domain_data: {
+          lawyerLicenseNo: 'ترخيص وزارة العدل رقم 410928',
+          hsmSignatureVault: 'FIPS 140-2 Cryptographic Token',
+          endToEndEncrypted: true
+        }
+      },
+      industrial_iot: {
+        app_name: `سنسور إندستريال — الصيانة التنبؤية #${projId.slice(-4)}`,
+        tagline: 'مراقبة اهتزاز وحرارة المحركات والمضخات عبر مجسات Modbus RS485 لمنع الأعطال',
+        categories: ['المحركات الكهربائية', 'المضخات الهيدروليكية', 'الضواغط الهوائية', 'خطوط الإنتاج'],
+        items: [
+          { title: 'مراقبة اهتزاز المضخة الرئيسية P-102', desc: 'تحليل طيف الترددات FFT وكشف تآكل المحامل قبل التوقف', price: 'طبيعي 100%', icon: 'activity', badge: 'Modbus 0x03' },
+          { title: 'مجس الحرارة العالية لمحرك خط التعبئة', desc: 'قراءة مستمرة عبر RTD PT100 مع إنذار فوري عند 85°C', price: '68°C مستقر', icon: 'cpu', badge: 'حساس حراري' },
+          { title: 'إنشاء أمر صيانة وقائية تلقائي', desc: 'إرسال بطاقة عمل فورية لفريق الصيانة الميكانيكية', price: 'أمر عمل نشط', icon: 'wrench', badge: 'مجدول' }
+        ],
+        domain_data: {
+          vibrationRmsMmS: 1.8,
+          bearingHealthIndex: 94,
+          modbusBaudRate: 19200,
+          acousticLeakStatus: 'Zero Ultrasonic Leaks'
+        }
+      },
       custom: {
         app_name: `منظومة مخصصة #${projId.slice(-4)}`,
         tagline: 'تطبيق تجاري مخصص غير متكرر مع ربط أجهزة الاستشعار',
@@ -653,6 +768,204 @@ async function startServer() {
         uniquenessScore,
         directive: 'CERTIFIED_NOVELTY: Design is mathematically distinct and registered in factory vault.'
       }
+    });
+  });
+
+  // ── Autonomous Smart Preset Selector API (Zero-Human Interaction) ───────────
+  // Evaluates any arbitrary brief against the 20 commercial archetypes,
+  // computes algorithmic confidence scores, and automatically resolves the best preset.
+  const handleSmartSelect = (briefInput: string) => {
+    const brief = (briefInput || '').toLowerCase();
+
+    // 20 Archetype Weighted Match Dictionary
+    const ARCHETYPE_PATTERNS: Record<string, { weightKeywords: string[]; hardware: string; domainNameAr: string }> = {
+      pos_cashier: {
+        weightKeywords: ['كاشير', 'نقاط بيع', 'pos', 'فاتورة', 'زاتكا', 'باركود', 'سوبرماركت', 'مخبز', 'تسجيل مدفوعات'],
+        hardware: 'ESC/POS Thermal Receipt Printer + Barcode Scanner',
+        domainNameAr: 'نقاط بيع وفوترة زاتكا ZATCA'
+      },
+      navigation: {
+        weightKeywords: ['ملاحة', 'بوصلة', 'صحراء', 'تخييم', 'بر', 'مسار', 'gpx', 'أقمار صناعية', 'طريق بري', 'إحداثيات'],
+        hardware: 'GPS RTK High-Precision Receiver + Gyroscope',
+        domainNameAr: 'ملاحة طوبوغرافية برية واستشعار الأقمار'
+      },
+      services: {
+        weightKeywords: ['صيانة', 'سباكة', 'كهرباء', 'تكييف', 'فني', 'تسريب', 'بلاغ', 'طوارئ منزلية', 'تنظيف منزلي'],
+        hardware: 'Mada Contactless EMV L2 NFC + GPS Dispatch',
+        domainNameAr: 'صيانة فورية وتتبع الفنيين الميدانيين'
+      },
+      fitness: {
+        weightKeywords: ['لياقة', 'جيم', 'تمارين', 'رياضة', 'ميزان', 'وزن', 'سعرات', 'عضلات', 'مدرب خاص'],
+        hardware: 'BLE Smart Scale GATT 0x181D + Heart Rate Strap',
+        domainNameAr: 'لياقة بدنية ومزامنة الميزان الذكي'
+      },
+      food: {
+        weightKeywords: ['طعام', 'وجبات', 'مطعم', 'مأكولات', 'فائض', 'سلة', 'حفظ النعمة', 'برجر', 'مطبخ سحابي'],
+        hardware: 'Kitchen Display System (KDS) TCP/IP Print Server',
+        domainNameAr: 'إنقاذ الأطعمة وإدارة المطابخ السحابية'
+      },
+      coworking: {
+        weightKeywords: ['مكتب', 'مساحة عمل', 'قاعة', 'اجتماع', 'كوويرك', 'حجز مكاتب', 'بوابة دخول', 'wi-fi'],
+        hardware: '13.56 MHz RFID Turnstile Access + TOTP Pass',
+        domainNameAr: 'مساحات عمل مشتركة وتصاريح ذكية'
+      },
+      telehealth: {
+        weightKeywords: ['طبيب', 'عيادة', 'صحة', 'ضغط دم', 'نبض', 'أكسجين', 'استشارة طبية', 'وصفة إلكترونية', 'مريض'],
+        hardware: 'BLE Blood Pressure & Pulse Oximeter GATT 0x1810',
+        domainNameAr: 'عيادات رقمية واستشارات طبية ومؤشرات حيوية'
+      },
+      agritech: {
+        weightKeywords: ['زراعة', 'مزرعة', 'ري المحاصيل', 'شبكات ري', 'تربة', 'نخيل', 'بيوت محمية', 'رطوبة', 'lora'],
+        hardware: 'LoRaWAN Soil Moisture Node + Solenoid Valve Relays',
+        domainNameAr: 'استشعار زراعي ورصد التربة وشبكات الري'
+      },
+      real_estate: {
+        weightKeywords: ['عقار', 'عقارات', 'فيلا', 'شقة', 'بنتهاوس', 'أملاك', 'صك', 'وسيط', 'إفراغ', 'برج', 'lidar', 'فال'],
+        hardware: '360 LiDAR Spatial Scanner + Matterport Pro3',
+        domainNameAr: 'عقارات فاخرة وجولات الواقع الافتراضي والصكوك'
+      },
+      car_rental: {
+        weightKeywords: ['سيارة', 'سيارات', 'تأجير', 'أسطول', 'تم', 'تفويض', 'مفتاح رقمي', 'obd', 'عداد', 'وقود'],
+        hardware: 'OBD-II CAN-Bus Telematics + BLE Digital Key Fob',
+        domainNameAr: 'تأجير سيارات ذكي وتحكم فوري بالأبواب'
+      },
+      beauty_salon: {
+        weightKeywords: ['صالون', 'تجميل', 'سبا', 'مكياج', 'شعر', 'بشرة', 'أظافر', 'خبيرة تجميل', 'مواعيد صالون', 'عناية'],
+        hardware: 'UV-C Chamber Sanitation IoT Sensor',
+        domainNameAr: 'صالونات ومراكز عناية وتجميل وحجز مواعيد'
+      },
+      auction_live: {
+        weightKeywords: ['مزاد', 'مزايدة', 'خيل', 'نوادر', 'مطرقة', 'شيك مصدق', 'لوحة مميزة', 'ساعة فاخرة', 'علني'],
+        hardware: 'BLE Hardware Bidding Paddle GATT + Sub-100ms WebRTC Audio',
+        domainNameAr: 'مزادات علنية حية وبث صوتي فائق السرعة'
+      },
+      smart_education: {
+        weightKeywords: ['تعليم', 'تدريب', 'دورة', 'معسكر', 'معهد', 'طالب', 'شهادة', 'محاضرة', 'قلم ذكي', 'برمجة'],
+        hardware: 'Smart Stylus Digitizer 4096-Level + BLE Beacon',
+        domainNameAr: 'تعليم تفاعلي ومعسكرات تقنية وشهادات موثقة'
+      },
+      logistics_warehouse: {
+        weightKeywords: ['مستودع', 'مخزن', 'طبلية', 'جرد', 'شحنة', 'باركود 2d', 'wms', 'ميزان طبالي', 'zebra'],
+        hardware: '2D Long-Range Laser Scanner + Bluetooth Pallet Scale',
+        domainNameAr: 'إدارة مستودعات ذكية وجرد سريع بالباركود'
+      },
+      smart_parking: {
+        weightKeywords: ['موقف', 'مواقف', 'فاليه', 'بوابة مواقف', 'حاجز', 'لوحات سيارات', 'شحن ev', 'ركن'],
+        hardware: 'Ultrasonic Ground Occupancy Sensor + ANPR LPR Camera',
+        domainNameAr: 'مواقف سيارات ذكية وحجز الفاليه وتتبع الشواغر'
+      },
+      event_ticketing: {
+        weightKeywords: ['فعالية', 'فعاليات', 'مؤتمر', 'تذكرة', 'تذاكر', 'حفلة', 'معرض', 'بوابات دخول', 'vip pass'],
+        hardware: '2D Turnstile QR Scanner + UHF RFID Wristband Programmer',
+        domainNameAr: 'تذاكر فعاليات رقمية ومكافحة التزوير'
+      },
+      smart_laundry: {
+        weightKeywords: ['مغسلة', 'غسيل', 'كوي', 'ملابس', 'تنظيف جاف', 'أثواب', 'فرز ملابس', 'كي بالبخار'],
+        hardware: 'Heat-Resistant RFID Garment Chips + Automated Sorter',
+        domainNameAr: 'مغاسل ذكية وتتبع قطع الملابس بالـ RFID'
+      },
+      pet_care: {
+        weightKeywords: ['بيطري', 'عيادة بيطرية', 'حيوانات', 'قطط', 'كلاب', 'أليف', 'شريحة حيوان', 'تطعيمات'],
+        hardware: 'ISO 11784/11785 134.2 kHz RFID Microchip Reader',
+        domainNameAr: 'عيادات بيطرية ورعاية الأليف والشريحة الإلكترونية'
+      },
+      legal_consulting: {
+        weightKeywords: ['محام', 'محامي', 'قانون', 'استشارة قانونية', 'عقد', 'توثيق', 'ناجز', 'قضية', 'مرافعة'],
+        hardware: 'FIPS 140-2 Cryptographic HSM Security Token',
+        domainNameAr: 'استشارات قانونية معتمدة وتوثيق العقود'
+      },
+      industrial_iot: {
+        weightKeywords: ['مصنع', 'صناعي', 'اهتزاز', 'معدات', 'مضخة', 'توربين', 'مرافق', 'صيانة تنبؤية', 'modbus', 'حساسات'],
+        hardware: '3-Axis Vibration Accelerometer + Modbus RS485 Acoustic Probe',
+        domainNameAr: 'صيانة تنبؤية صناعية ومراقبة اهتزاز المعدات'
+      }
+    };
+
+    let bestArchetype = 'services';
+    let highestScore = 0;
+    let matchedKeywords: string[] = [];
+
+    for (const [archKey, info] of Object.entries(ARCHETYPE_PATTERNS)) {
+      let score = 0;
+      const matched: string[] = [];
+      for (const kw of info.weightKeywords) {
+        if (brief.includes(kw)) {
+          score += 10;
+          matched.push(kw);
+        }
+      }
+      if (score > highestScore) {
+        highestScore = score;
+        bestArchetype = archKey;
+        matchedKeywords = matched;
+      }
+    }
+
+    const confidenceScore = highestScore > 0 ? Math.min(0.99, 0.65 + highestScore * 0.05) : 0.50;
+    const targetMeta = ARCHETYPE_PATTERNS[bestArchetype];
+    const generatedId = String(Math.floor(1275000 + Math.random() * 4999));
+    const formula = computeDesignFormula(generatedId, bestArchetype, bestArchetype);
+
+    return {
+      status: 'AUTONOMOUSLY_RESOLVED',
+      selected_archetype: bestArchetype,
+      confidence_score: Number(confidenceScore.toFixed(2)),
+      domain_title_ar: targetMeta.domainNameAr,
+      hardware_peripheral: targetMeta.hardware,
+      matched_keywords: matchedKeywords,
+      theme_harmonics: {
+        primary_color: formula.colorHarmonics.accent10,
+        accent_color: formula.colorHarmonics.secondaryAccent || '#f59e0b',
+        contrast_ratio: formula.colorHarmonics.contrastRatio
+      },
+      layout_rhythm: formula.layoutArchetype.name,
+      zero_human_cli_command: `python3 scripts_archive/factory_engine.py ${generatedId} ${bestArchetype} "${briefInput.replace(/"/g, '')}"`,
+      auto_generated_project_id: generatedId
+    };
+  };
+
+  // POST endpoint for Smart Preset Selector
+  app.post('/api/agent/smart-select', (req, res) => {
+    const brief = req.body?.brief || req.body?.description || req.body?.text || 'مشروع تطبيق أعمال متكامل';
+    const resolution = handleSmartSelect(brief);
+    res.json(resolution);
+  });
+
+  // GET query endpoint for Smart Preset Selector
+  app.get('/api/agent/smart-select', (req, res) => {
+    const brief = (req.query.brief as string) || (req.query.q as string) || 'مشروع تطبيق أعمال متكامل';
+    const resolution = handleSmartSelect(brief);
+    res.json(resolution);
+  });
+
+  // GET all 20 presets catalog
+  app.get('/api/presets', (req, res) => {
+    res.json({
+      totalCount: 20,
+      supportedArchetypes: [
+        'pos_cashier',
+        'navigation',
+        'services',
+        'fitness',
+        'food',
+        'coworking',
+        'telehealth',
+        'agritech',
+        'real_estate',
+        'car_rental',
+        'beauty_salon',
+        'auction_live',
+        'smart_education',
+        'logistics_warehouse',
+        'smart_parking',
+        'event_ticketing',
+        'smart_laundry',
+        'pet_care',
+        'legal_consulting',
+        'industrial_iot'
+      ],
+      zeroHumanApi: '/api/agent/smart-select',
+      serverPortConfigured: PORT
     });
   });
 

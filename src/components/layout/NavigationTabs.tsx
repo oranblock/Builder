@@ -19,6 +19,7 @@ import {
   BookMarked,
   Bot,
   Sliders,
+  Scale,
 } from 'lucide-react';
 
 interface NavigationTabsProps {
@@ -31,8 +32,9 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
   onTabChange,
 }) => {
   const tabs = [
+    { id: 'peer-judge', label: 'AI Peer-Judge & Learning Vault', icon: Scale },
     { id: 'smart-agent', label: 'Smart Agent Swarm Hub', icon: Bot },
-    { id: 'preset-studio', label: '14 Presets & Custom Studio', icon: Sliders },
+    { id: 'preset-studio', label: '20 Presets & Custom Studio', icon: Sliders },
     { id: 'diversity', label: 'Design Diversity & Anti-Duplicate Formula', icon: Sparkles },
     { id: 'simulator', label: 'Mobile Preview Shell', icon: Smartphone },
     { id: 'factory-room', label: 'Factory Control Room', icon: Cpu },

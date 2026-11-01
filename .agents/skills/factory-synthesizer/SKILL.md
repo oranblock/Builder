@@ -17,9 +17,10 @@ This skill empowers autonomous agents to monitor freelance client requests (e.g.
 
 ---
 
-## 2. Supported Archetypes & Hardware Sensor Matrix (20 Commercial Domains + Custom)
+## 2. Creative Springboards & Hardware Reference Architectures (20 Domains + Custom)
 
-Agents must select from the following 20 commercial archetypes or generate a custom preset:
+**CRITICAL MANDATE: INNOVATE, DO NOT DUPLICATE.**
+The 20 commercial domains and hardware peripherals below are creative springboards and architectural references — **NEVER rigid molds or repetitive templates**. Agents must invent custom layouts, novel telemetry widgets, and unique domain models. Every synthesized app must be cross-examined by the Adversarial Peer Judge.
 
 | Archetype Code | Industry Domain | Bound Hardware Peripheral | Driver Protocol | Target Commercial Value |
 | :--- | :--- | :--- | :--- | :--- |

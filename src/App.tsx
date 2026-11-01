@@ -26,9 +26,10 @@ import { downloadProjectZip } from './lib/zipExport';
 import { Cpu, CheckCircle2 } from 'lucide-react';
 import { SmartAgentControlCenter } from './components/agent/SmartAgentControlCenter';
 import { CustomPresetStudio } from './components/diversity/CustomPresetStudio';
+import { PeerJudgeArena } from './components/governance/PeerJudgeArena';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('smart-agent');
+  const [activeTab, setActiveTab] = useState<string>('peer-judge');
   const [simulatedProjectId, setSimulatedProjectId] = useState<string | undefined>(undefined);
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
@@ -98,6 +99,14 @@ export default function App() {
 
       {/* Main View Area */}
       <main className="flex-1">
+        {activeTab === 'peer-judge' && (
+          <PeerJudgeArena
+            onLoadInSimulator={(spec) => {
+              setSimulatedProjectId(spec.project_id);
+            }}
+            onNavigateToSimulator={() => setActiveTab('simulator')}
+          />
+        )}
         {activeTab === 'smart-agent' && (
           <SmartAgentControlCenter
             onLaunchSimulator={(pid) => {

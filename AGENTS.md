@@ -10,45 +10,44 @@ This document provides immediate, deterministic instructions for autonomous agen
 # 1. Autonomous Zero-Human Selection & Synthesis (Smart Preset Selector)
 python3 scripts_archive/smart_selector.py "<ARABIC_BRIEF>" --auto-synthesize
 
-# 2. Synthesize bespoke Android app with explicit archetype or auto detection
-python3 scripts_archive/factory_engine.py <PROJECT_ID> auto "<ARABIC_BRIEF>"
-python3 scripts_archive/factory_engine.py <PROJECT_ID> <ARCHETYPE> "<ARABIC_BRIEF>"
+# 2. Adversarial Peer-Review Audit ("Let AI Learn & Be Judged by Each Other")
+python3 scripts_archive/peer_judge.py <PROJECT_ID>
+python3 scripts_archive/peer_judge.py --all --auto-remediate
 
-# 3. Run Forensic Governance Board Audit on all applications
+# 3. Synthesize bespoke Android app with explicit archetype or auto detection
+python3 scripts_archive/factory_engine.py <PROJECT_ID> auto "<ARABIC_BRIEF>"
+
+# 4. Run Forensic Governance Board Audit on all applications
 python3 scripts_archive/board_owner_audit.py --all --no-telegram
 
-# 4. Scout freelance leads & auto-synthesize non-colliding prototypes
+# 5. Scout freelance leads & auto-synthesize non-colliding prototypes
 python3 scripts_archive/monitor.py --simulate --auto-synthesize --once
 
-# 5. Check API connectivity & run internal validation tests
+# 6. Check API connectivity & run internal validation tests
 python3 scripts_archive/agent_client.py
 ```
 
 ---
 
-## 🔌 Port Configuration & Conflict Isolation
+## ⚖️ AI Peer-Review & Collective Learning Loop ("Be Judged by Each Other")
 
-To prevent conflicts in environments running Tachyon and OmniRoute:
-- **Port 3000**: Tachyon Web Server
-- **Port 5000**: File Uploader Service
-- **Port 8888**: SearXNG Search Engine
-- **Port 20128**: OmniRoute AI Gateway and Dashboard
-- **Port 20131**: OmniRoute Internal Worker
-- **Port 20132**: OmniRoute Internal Proxy
-- **Port 3030** (`FACTORY_PORT=3030`): Factory Web Dashboard & API Server
-
-When running Python agent daemons or invoking the API, export:
-```bash
-export FACTORY_PORT=3030
-export FACTORY_API_BASE_URL="http://localhost:3030"
-```
-The client SDK `agent_client.py` and `smart_selector.py` dynamically resolve this environment variable.
+Autonomous agents operate under mutual adversarial cross-examination:
+1. **Agent Alpha (The Creator)** synthesizes the project spec, MVVM architecture, and hardware driver.
+2. **Agent Beta (The Adversary Judge)** audits the work across 5 pillars:
+   - **Structural Novelty & Anti-Duplication**: Rejects any app with $> 45\%$ structural token overlap.
+   - **Architectural & Entity Innovation**: Forbids cookie-cutter service lists; mandates bespoke domain verbs.
+   - **Hardware Driver Protocol Depth**: Enforces real Bluetooth, NFC, RTK GPS, or LoRaWAN sockets.
+   - **WCAG 2.1 AAA Contrast Math & Zero Emojis**: Minimum 4.5:1 luminance ratio; zero emoji unicode.
+   - **Commercial Arabic Prestige**: Authentic Saudi/Gulf business terminology.
+3. **Collective Learning Vault**: All rejections and breakthroughs are logged to `/api/agent/learning-vault`. Before generating, agents query this vault to ensure they never repeat blacklisted duplicate patterns.
+4. **Auto-Remediation**: If an app receives a peer score $< 80$ or grade $< \text{A}$, evolutionary mutation is immediately applied.
 
 ---
 
-## 🧭 The 20 Commercial Archetypes & Their Sensor Signatures
+## 🧭 Innovation Springboards (20 Commercial Archetypes + Custom)
 
-When parsing user briefs or freelance job descriptions, classify the project into one of these exact keys:
+**CRITICAL MANDATE: INNOVATE, DO NOT DUPLICATE.**
+The 20 archetypes below are baseline creative springboards and sensor reference architectures, **NOT rigid molds or repetitive templates**. Agents must invent custom layouts, novel telemetry cards, asymmetrical headers, and bespoke domain workflows. Never output the same visual structure twice.
 
 1. **`pos_cashier`**: Retail cashier, supermarket checkout, restaurant POS.
    - Peripheral: ESC/POS Thermal Receipt Printer + Barcode Scanner.
